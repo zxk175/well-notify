@@ -1,9 +1,7 @@
-# well-back
+# well-notify
 
-well-back
+well-notify
 
 Demo地址
 
-> [后台地址](https://well.zxk175.com/)
-
-> [前端地址](https://well.zxk175.com/admin/index.html#/login)
+> [Demo](https://well.zxk175.com/)
