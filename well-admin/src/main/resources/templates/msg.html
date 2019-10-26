@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
+    <meta name="applicable-device" content="mobile">
+    <meta name='apple-touch-fullscreen' content='yes'>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>消息阅读 | Well</title>
+    <link rel="stylesheet" href="//lib.baomitu.com/element-ui/2.8.2/theme-chalk/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/msg.css">
+</head>
+
+<body>
+<div id="app" v-cloak>
+    <div class="content-container">
+        <div v-if="title" class="page-header">
+            <h2>{{title}}</h2>
+        </div>
+
+        <div v-html="contentHtml"></div>
+    </div>
+
+    <footer v-if="title" class="footer">
+        <div class="container">
+            <p class="text-muted">
+                <span>本消息由</span>
+                <a href="https://well.zxk175.com">PushWell</a>
+                <img class="icon" src="https://zxk175.com/templates/themes/default/static/img/apple-touch-icon.png" width="16">
+                <span>为您投递，</span>
+                <a href="javascript:;">点此退订</a>
+            </p>
+        </div>
+    </footer>
+</div>
+
+<script type="text/javascript" src="//lib.baomitu.com/vue/2.6.10/vue.min.js"></script>
+<script type="text/javascript" src="//lib.baomitu.com/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript" src="//lib.baomitu.com/element-ui/2.8.2/index.js"></script>
+<script type="text/javascript" src="//lib.baomitu.com/marked/0.6.2/marked.js"></script>
+<script type="text/javascript" src="/js/request.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                msgId: "",
+                title: "",
+                contentHtml: "",
+            };
+        },
+        mounted() {
+            this.htmlTxt();
+        },
+        methods: {
+            htmlTxt: function () {
+                let that = this;
+
+                let msgId = getQueryString("msgId");
+                let url = ctx + "/notify/msg-info/v1?msgId=" + msgId;
+                get(url, function (res) {
+                    let data = res.data;
+                    if (data.success) {
+                        that.msgId = msgId;
+                        that.title = data.data.title;
+                        that.contentHtml = marked(data.data.content);
+                    } else {
+                        that.contentHtml = "<h2 class='empty-txt'>" + data.msg + "</h2>";
+                    }
+                }, function () {
+                    that.$message.error("请求错误");
+                })
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+apply plugin: "org.springframework.boot"
+
+bootJar {
+    setArchivesBaseName("well-admin")
+}
+
+dependencies {
+    annotationProcessor libraries.lombok
+    testAnnotationProcessor libraries.lombok
+
+    compile(
+            project(":well-core"),
+            [
+                    libraries.swagger2_ui,
+
+                    libraries.commons_pool2,
+            ]
+    )
+}

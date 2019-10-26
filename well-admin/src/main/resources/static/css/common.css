@@ -1,0 +1,81 @@
+[v-cloak] {
+    display: none;
+}
+
+body {
+    background-color: #fff;
+}
+
+a {
+    outline: 0;
+    color: #2d8cf0;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition: color .2s ease;
+    transition: color .2s ease;
+}
+
+.popover-tip-op {
+    padding: 0 2px;
+    color: red;
+}
+
+.content-wrapper .el-card__body {
+    padding: 10px;
+}
+
+.cell #cell-icon {
+    font-size: 16px;
+}
+
+.table-div {
+    margin-top: 5px;
+}
+
+.table-page {
+    margin: 10px auto 0 auto;
+    text-align: right;
+}
+
+.tool {
+    border: 1px solid #eee;
+    border-bottom: none;
+}
+
+.tool-left {
+    padding: 6px 0 6px 16px;
+}
+
+.tool-right {
+    padding: 6px 16px 6px 0;
+    text-align: right;
+}
+
+.btn-long {
+    width: 100%;
+}
+
+.iv-row {
+    margin-bottom: 8px;
+}
+
+.mr {
+    margin: 10px 0;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.fs {
+    font-size: 18px;
+}
+
+.error-txt {
+    margin: 10px 10px;
+    color: #606465;
+}

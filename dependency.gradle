@@ -1,0 +1,50 @@
+ext.versions = [
+        project_group    : "com.zxk175",
+        project_version  : "1.0.0",
+        project_encoding : "UTF-8",
+
+        spring_boot      : "2.2.0.RELEASE",
+
+        mysql            : "8.0.16",
+        boot_mybatis_plus: "3.2.0",
+
+        fast_json        : "1.2.60",
+
+        swagger2         : "2.7.0",
+
+        servlet_api      : "4.0.1",
+        hutool           : "4.6.8",
+]
+
+ext.libraries = [
+        lombok              : "org.projectlombok:lombok",
+
+        boot_web            : "org.springframework.boot:spring-boot-starter-web",
+        boot_aop            : "org.springframework.boot:spring-boot-starter-aop",
+        boot_redis          : "org.springframework.boot:spring-boot-starter-data-redis",
+        boot_freemarker     : "org.springframework.boot:spring-boot-starter-freemarker",
+        boot_undertow       : "org.springframework.boot:spring-boot-starter-undertow",
+        boot_actuator       : "org.springframework.boot:spring-boot-starter-actuator",
+        boot_test           : "org.springframework.boot:spring-boot-starter-test",
+
+        mysql               : "mysql:mysql-connector-java:${versions.mysql}",
+        boot_mybatis_plus   : "com.baomidou:mybatis-plus-boot-starter:${versions.boot_mybatis_plus}",
+
+        fast_json           : "com.alibaba:fastjson:${versions.fast_json}",
+
+        swagger2            : "io.springfox:springfox-swagger2:${versions.swagger2}",
+        swagger2_ui         : "io.springfox:springfox-swagger-ui:${versions.swagger2}",
+
+        // fix 找不到javax.annotation.meta.When的类文件
+        findbugs_annotations: "com.google.code.findbugs:annotations:3.0.1",
+
+        commons_pool2       : "org.apache.commons:commons-pool2:2.7.0",
+        servlet_api         : "javax.servlet:javax.servlet-api:${versions.servlet_api}",
+        hutool_core         : "cn.hutool:hutool-core:${versions.hutool}",
+        hutool_crypto       : "cn.hutool:hutool-crypto:${versions.hutool}",
+        okhttp3             : "com.squareup.okhttp3:okhttp:3.14.4",
+        ip2region           : "org.lionsoul:ip2region:1.7.2",
+        fst                 : "de.ruedigermoeller:fst:2.57",
+
+        ali_oss             : "com.aliyun.oss:aliyun-sdk-oss:3.4.2",
+]

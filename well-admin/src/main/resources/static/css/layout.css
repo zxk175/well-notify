@@ -1,0 +1,92 @@
+body, html {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.nav {
+    margin: 0 6px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav li {
+    float: right;
+}
+
+.dropdown-content .el-icon-arrow-down, .dropdown-content span, .dropdown-content i {
+    color: #fff;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.avatar {
+    display: inline;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #fff;
+}
+
+.el-container .el-main {
+    padding: 6px;
+    background-color: #fafafa;
+}
+
+.el-container .el-header {
+    border-bottom: 1px solid #eee;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.full-height .el-header {
+    padding: 0;
+}
+
+.header {
+    overflow: hidden;
+    border-color: #0c9cfc;
+    background-color: #0c9cfc;
+    color: #fff;
+}
+
+.logo {
+    box-sizing: border-box;
+    border-right: 1px solid #eee;
+    text-align: center;
+    font-size: 30px;
+    line-height: 60px;
+}
+
+.logo a {
+    color: #fff;
+}
+
+.el-aside .el-menu {
+    box-sizing: border-box;
+}
+
+.el-menu-vertical:not(.el-menu--collapse), .logo-width {
+    width: 240px;
+}
+
+.logo-collapse-width {
+    width: 64px;
+}
+
+.logo-width, .logo-collapse-width {
+    /* fix 折叠logo和折叠菜单同步动效 */
+    transition: .3s width ease-in-out, .3s padding-left ease-in-out, .3s padding-right ease-in-out;
+}
+
+.collapse {
+    padding: 0 4px;
+    font-size: 26px;
+    line-height: 60px;
+    cursor: pointer;
+}

@@ -1,0 +1,17 @@
+mysql:
+  host: 127.0.0.1
+
+redis:
+  host: 127.0.0.1
+
+spring:
+  datasource:
+    hikari:
+      username: well
+      password: 123456
+  redis:
+    password: WLP35Fd10Sp3eQQbX8
+
+logging:
+  level:
+    root: info

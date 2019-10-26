@@ -1,0 +1,4 @@
+rootProject.name = 'well-notify'
+
+include 'well-core'
+include 'well-admin'
