@@ -103,7 +103,8 @@ public class OkHttpUtil {
 
             return responseBody.string();
         } catch (Exception ex) {
-            throw new RuntimeException("executeRequest异常", ex);
+            log.error("executeRequest异常", ex);
+            return MyStrUtil.EMPTY;
         } finally {
             if (ObjectUtil.isNotNull(response)) {
                 response.close();
