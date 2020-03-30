@@ -76,7 +76,7 @@ public class WxMpTemplateMsgController extends BaseController {
         }
 
         QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
-        notifyChannelUserQw.select("user_id, user_name, channel_id, open_id, state");
+        notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
         notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
         notifyChannelUserQw.eq("channel_id", notifyChannelDb.getId());
         List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.list(notifyChannelUserQw);
