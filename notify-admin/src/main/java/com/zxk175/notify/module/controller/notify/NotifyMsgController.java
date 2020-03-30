@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * <p>
  * 消息表 前端控制器
- * </p>
  *
  * @author zxk175
- * @since 2019-11-27 15:41
+ * @since 2020-03-30 09:15
  */
 @Controller
 @AllArgsConstructor

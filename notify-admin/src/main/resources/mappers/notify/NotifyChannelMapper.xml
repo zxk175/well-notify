@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxk175.notify.module.dao.notify.NotifyChannelDao">
+
+    <select id="listNotifyChannel" resultType="java.util.Map">
+        SELECT
+            nc.id AS channelId,
+            nc.channel_name AS channelName,
+            nc.create_time AS createTime,
+            nc.update_time AS updateTime,
+            nc.state
+        FROM
+            t_notify_channel AS nc
+        ORDER BY
+            nc.create_time DESC
+        LIMIT #{page}, #{size}
+    </select>
+
+    <select id="countNotifyChannel" resultType="java.lang.Long">
+        SELECT
+            COUNT(*)
+        FROM
+            t_notify_channel AS nc
+    </select>
+
+</mapper>

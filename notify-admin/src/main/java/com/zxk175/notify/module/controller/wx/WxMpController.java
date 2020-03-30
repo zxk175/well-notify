@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * <p>
  * 微信公众号 前端控制器
- * </p>
  *
  * @author zxk175
- * @since 17/5/17
+ * @since 2020-03-30 09:14
  */
 @Controller
 @RequestMapping(Const.BASE_URL + "/wx-mp")
