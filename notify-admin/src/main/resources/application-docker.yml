@@ -1,0 +1,15 @@
+mysql:
+  # 使用docker时 取容器Id
+  host: mysql-stand
+  # 使用docker时 取容器运行端口
+  port: 3306
+
+redis:
+  host: redis
+  port: 6379
+  password: WLP35Fd10Sp3eQQbX8
+
+
+logging:
+  level:
+    root: info

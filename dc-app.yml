@@ -1,20 +1,20 @@
 version: "3.7"
 services:
-  well-admin:
+  notify-admin:
     build:
       context: ./
-      dockerfile: docker/Dockerfile.well-admin
-    image: zxk175/well-admin:1.0.0
-    container_name: well-admin
+      dockerfile: docker/Dockerfile.notify-admin
+    image: zxk175/notify-admin:1.0.0
+    container_name: notify-admin
     ports:
       - "8010:8010"
     environment:
       - "TZ=Asia/Shanghai"
       - "spring.profiles.active=docker"
     networks:
-      - well
+      - cloud
 
 networks:
-  well:
-    name: well
+  cloud:
+    name: cloud
     driver: bridge

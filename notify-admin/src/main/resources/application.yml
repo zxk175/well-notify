@@ -1,0 +1,80 @@
+db:
+  host: 127.0.0.1
+  port: 23306
+  name: notify_data
+  username: well
+  password: 123456
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: 123456
+
+server:
+  port: 8010
+  forward-headers-strategy: native
+  undertow:
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作,
+    # undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+    worker-threads: 20
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的io操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 1024
+    # 设置io线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认取cpu核心数量,最小值为2
+    io-threads: 4
+    # 是否分配的直接内存
+    direct-buffers: true
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: well-notify
+  aop:
+    auto: true
+    proxy-target-class: true
+  resources:
+    static-locations: classpath:/static/, classpath:META-INF/resources
+  mvc:
+    throw-exception-if-no-handler-found: true
+  freemarker:
+    suffix: .html
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://${db.host}:${db.port}/${db.name}?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ${db.username}
+      password: ${db.password}
+      max-lifetime: 60000
+  redis:
+    host: ${redis.host}
+    port: ${redis.port}
+    password: ${redis.password}
+    timeout: 2s
+    lettuce:
+      pool:
+        max-idle: 100
+        min-idle: 10
+        max-wait: -1s
+        max-active: -1
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/**/*.xml
+  global-config:
+    db-config:
+      # id生成类型
+      id-type: id_worker
+      # 全局表为下划线命名设置
+      table-underline: true
+  configuration:
+    # 配置的缓存的全局开关
+    cache-enabled: true
+    # 延时加载的开关
+    lazy-loading-enabled: true
+    # map映射null值
+    call-setters-on-nulls: true
+    # 开启的话,延时加载一个属性时会加载该对象全部属性
+    # 否则按需加载属性
+    multiple-result-sets-enabled: true
+    # 是否启用下划线与驼峰式命名规则的映射
+    map-underscore-to-camel-case: true

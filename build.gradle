@@ -2,7 +2,7 @@ buildscript {
     // 引入jar包定义
     // 这个文件中定义的jar包可以直接在子项目中使用
     // 不需要再次使用 apply from 这个语句
-    apply from: "dependency.gradle"
+    apply from: "depend.gradle"
 
     repositories {
         mavenLocal()
@@ -112,10 +112,10 @@ task clear {
 }
 
 // 升级命令
-// ./gradlew wrapper --gradle-version=5.6
+// gradle wrapper --gradle-version=6.2.2
 
 // 强制清除 gradle 依赖缓存
-// ./gradlew build --refresh-dependencies --stacktrace
+// gradle build --refresh-dependencies --stacktrace
 
 // 查看依赖树
 // gradle :well-eureka-server:dependencies --configuration compile

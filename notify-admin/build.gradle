@@ -1,0 +1,39 @@
+apply plugin: "org.springframework.boot"
+
+bootJar {
+    setArchivesBaseName("notify-admin")
+}
+
+dependencies {
+    annotationProcessor libraries.lombok
+    testAnnotationProcessor libraries.lombok
+
+    compile([
+            libraries.boot_web,
+            libraries.boot_aop,
+            libraries.boot_redis,
+            libraries.boot_freemarker,
+            libraries.boot_undertow,
+
+            libraries.mysql,
+            libraries.boot_mybatis_plus,
+
+            libraries.fast_json,
+
+            libraries.swagger2,
+            libraries.swagger2_ui,
+
+            libraries.findbugs_annotations,
+
+            libraries.servlet_api,
+            libraries.commons_pool2,
+            libraries.hutool_core,
+            libraries.hutool_crypto,
+            libraries.okhttp3,
+            libraries.ip2region,
+            libraries.fst,
+            libraries.jwt,
+
+            libraries.ali_oss,
+    ])
+}
