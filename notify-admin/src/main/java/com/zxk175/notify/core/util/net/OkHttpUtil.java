@@ -5,7 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.zxk175.notify.core.util.MyStrUtil;
 import com.zxk175.notify.core.util.json.FastJsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,8 +80,8 @@ public class OkHttpUtil {
 
     public String postJson(String url, String param) {
         // 请求参数
-        okhttp3.MediaType mediaType = okhttp3.MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
-        RequestBody body = RequestBody.create(mediaType, param);
+        MediaType mediaType = MediaType.Companion.parse("application/json");
+        RequestBody body = RequestBody.Companion.create(param, mediaType);
 
         // 请求创建
         Request request = new Request.Builder()

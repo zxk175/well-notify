@@ -1,4 +1,4 @@
-package com.zxk175.notify.module.controller.wx;
+package com.zxk175.notify.module.service.impl.wx;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zxk175.notify.core.config.WxConfig;
 import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.constant.enums.StateType;
-import com.zxk175.notify.core.http.Response;
+import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.core.tuple.Tuple2;
 import com.zxk175.notify.core.util.MyStrUtil;
 import com.zxk175.notify.core.util.ThreadUtil;
@@ -15,39 +15,28 @@ import com.zxk175.notify.core.util.wx.WxTemplateMsgUtil;
 import com.zxk175.notify.core.util.wx.bean.notify.DeviceNotifyData;
 import com.zxk175.notify.core.util.wx.thread.DeviceNotifyCallable;
 import com.zxk175.notify.module.bean.param.wx.DeviceNotifyParam;
-import com.zxk175.notify.module.controller.BaseController;
 import com.zxk175.notify.module.pojo.notify.NotifyChannel;
 import com.zxk175.notify.module.pojo.notify.NotifyChannelUser;
 import com.zxk175.notify.module.pojo.notify.NotifyMsg;
 import com.zxk175.notify.module.service.notify.INotifyChannelService;
 import com.zxk175.notify.module.service.notify.INotifyChannelUserService;
 import com.zxk175.notify.module.service.notify.INotifyMsgService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.zxk175.notify.module.service.wx.IWxTemplateMsgService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 /**
- * 微信模板消息 前端控制器
- *
  * @author zxk175
- * @since 2020-03-29 23:28
+ * @since 2020-03-30 11:39
  */
-@Controller
+@Service
 @AllArgsConstructor
-@RequestMapping("/notify")
-@Api(tags = "微信公众号模板消息通知")
-public class WxMpTemplateMsgController extends BaseController {
+public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
 
     private INotifyMsgService notifyMsgService;
     private WxTemplateMsgUtil wxTemplateMsgUtil;
@@ -55,16 +44,8 @@ public class WxMpTemplateMsgController extends BaseController {
     private INotifyChannelUserService notifyChannelUserService;
 
 
-    @GetMapping("msg")
-    public String msg(Model model) {
-        model.addAttribute("title", "消息阅读 | Well");
-        return "msg";
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/send/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "发送通知消息", notes = "发送通知消息")
-    public Response<Object> sendMsg(@Validated @RequestBody DeviceNotifyParam param) {
+    @Override
+    public ResponseExt<Object, ?> send(DeviceNotifyParam param) {
         String sendKey = param.getSendKey();
         QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
         notifyChannelQw.select("id, channel_name, state");
@@ -72,7 +53,7 @@ public class WxMpTemplateMsgController extends BaseController {
         notifyChannelQw.eq("id", sendKey);
         NotifyChannel notifyChannelDb = notifyChannelService.getOne(notifyChannelQw);
         if (ObjectUtil.isNull(notifyChannelDb)) {
-            return fail("sendKey不合法");
+            return ResponseExt.failure("sendKey不合法");
         }
 
         QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
@@ -81,30 +62,18 @@ public class WxMpTemplateMsgController extends BaseController {
         notifyChannelUserQw.eq("channel_id", notifyChannelDb.getId());
         List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.list(notifyChannelUserQw);
         if (CollUtil.isEmpty(notifyChannelUsers)) {
-            return fail("无人订阅");
+            return ResponseExt.failure("无人订阅");
         }
 
         try {
             return notifyCommon(param, notifyChannelDb, notifyChannelUsers);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return fail("发送服务异常");
+            return ResponseExt.failure("发送服务异常");
         }
     }
 
-    @ResponseBody
-    @GetMapping(value = "/msg-info/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "获取消息内容", notes = "获取消息内容")
-    public Response<Object> getMsgInfo(@RequestParam(name = "msgId") String msgId) {
-        QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
-        notifyMsgQw.select("title, content");
-        notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
-        notifyMsgQw.eq("id", msgId);
-        Map<String, Object> notifyMsg = notifyMsgService.getMap(notifyMsgQw);
-        return Response.objectReturn(notifyMsg);
-    }
-
-    private Response<Object> notifyCommon(DeviceNotifyParam param, NotifyChannel notifyChannel, List<NotifyChannelUser> notifyChannelUsers) throws Exception {
+    private ResponseExt<Object, ?> notifyCommon(DeviceNotifyParam param, NotifyChannel notifyChannel, List<NotifyChannelUser> notifyChannelUsers) throws Exception {
         NotifyMsg notifyMsg = new NotifyMsg();
         String title = param.getTitle();
         String content = param.getContent();
@@ -150,10 +119,9 @@ public class WxMpTemplateMsgController extends BaseController {
                 tuples.add(result);
             }
 
-            return ok(tuples);
+            return ResponseExt.success(tuples);
         }
 
-        return fail("发送失败");
+        return ResponseExt.failure("发送失败");
     }
-
 }
