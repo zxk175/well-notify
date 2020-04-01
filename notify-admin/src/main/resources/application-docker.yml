@@ -3,6 +3,7 @@ mysql:
   host: mysql
   # 使用docker时 取容器运行端口
   port: 3306
+  password: 7Y19IAQlxWZv1WrR
 
 redis:
   host: redis
