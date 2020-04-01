@@ -51,8 +51,6 @@ public class IpUtil {
             ClassPathResource classPathResource = new ClassPathResource(fileResourcePath);
             return getIpRegion(ip, IoUtil.readBytes(classPathResource.getInputStream()));
         } catch (Exception ex) {
-            ex.printStackTrace();
-
             StringBuilder msg = new StringBuilder(16);
             msg.append("exception：").append(ex.toString());
             StackTraceElement[] stackTrace = ex.getStackTrace();

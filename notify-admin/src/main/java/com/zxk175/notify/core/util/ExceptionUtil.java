@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * @author zxk175
- * @since 2018/7/16 11:54
+ * @since 2020-04-01 13:49
  */
 public class ExceptionUtil {
 
@@ -42,11 +42,7 @@ public class ExceptionUtil {
             e.printStackTrace(printStream);
             result = outputStream.toString(Const.UTF_8_OBJ);
             printStream.close();
-            try {
-                outputStream.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            outputStream.close();
         }
 
         return result;

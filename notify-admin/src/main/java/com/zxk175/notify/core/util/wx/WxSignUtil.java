@@ -47,7 +47,7 @@ public class WxSignUtil {
             byte[] bytes = digest.digest(str.getBytes(Const.UTF_8_OBJ));
             return toHex(bytes);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("sha1签名异常", ex);
         }
 
         return "";

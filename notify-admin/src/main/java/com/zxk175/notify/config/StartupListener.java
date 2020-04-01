@@ -28,8 +28,7 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
             log.info("WxGlobalToken：{}", wxGlobalToken);
             log.info("初始化成功");
         } catch (Exception ex) {
-            ex.printStackTrace();
-            log.info("初始化失败");
+            log.error("初始化失败", ex);
         }
     }
 

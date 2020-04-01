@@ -9,6 +9,7 @@ import com.zxk175.notify.core.util.common.CommonUtil;
 import com.zxk175.notify.core.util.net.RequestUtil;
 import com.zxk175.notify.core.util.upload.UploadUtil;
 import com.zxk175.notify.module.bean.vo.ErrorVo;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.engine.path.NodeImpl;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.core.annotation.Order;
@@ -27,12 +28,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zxk175
  * @since 2020-03-29 13:56
  */
+@Slf4j
 @Order(-1000)
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -128,7 +137,7 @@ public class GlobalExceptionHandler {
     }
 
     private Response<?> buildExceptionInfo(Exception ex, String title) {
-        ex.printStackTrace();
+        log.error("未知异常", ex);
 
         StringBuilder msg = new StringBuilder();
         msg.append(FORMAT1);

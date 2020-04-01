@@ -1,16 +1,19 @@
 version: "3.7"
 services:
-  notify-admin:
+  well-notify:
     build:
       context: ./
-      dockerfile: docker/Dockerfile.notify-admin
-    image: zxk175/notify-admin:1.0.0
-    container_name: notify-admin
+      dockerfile: Dockerfile
+    image: "zxk175/well-notify:1.0.0"
+    container_name: well-notify
+    restart: always
     ports:
-      - "8010:8010"
+      - "8020:8010"
     environment:
       - "TZ=Asia/Shanghai"
       - "spring.profiles.active=docker"
+    volumes:
+      - "./dc-logs:/logs"
     networks:
       - cloud
 

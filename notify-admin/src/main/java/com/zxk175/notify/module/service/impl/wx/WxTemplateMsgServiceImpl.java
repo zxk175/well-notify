@@ -23,6 +23,7 @@ import com.zxk175.notify.module.service.notify.INotifyChannelUserService;
 import com.zxk175.notify.module.service.notify.INotifyMsgService;
 import com.zxk175.notify.module.service.wx.IWxTemplateMsgService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import java.util.concurrent.FutureTask;
  * @author zxk175
  * @since 2020-03-30 11:39
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
@@ -68,7 +70,7 @@ public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
         try {
             return notifyCommon(param, notifyChannelDb, notifyChannelUsers);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("发送服务异常", ex);
             return ResponseExt.failure("发送服务异常");
         }
     }

@@ -6,6 +6,7 @@ import com.zxk175.notify.core.util.ThreadUtil;
 import com.zxk175.notify.core.util.json.FastJsonUtil;
 import com.zxk175.notify.core.util.net.OkHttpUtil;
 import com.zxk175.notify.core.util.spring.SpringActiveUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutorService;
  * @author zxk175
  * @since 2020-03-29 13:47
  */
+@Slf4j
 public class PushWellUtil {
 
     public static void sendNotify(String title, String msg) {
@@ -33,7 +35,7 @@ public class PushWellUtil {
 
                 OkHttpUtil.instance().postJson(Const.WE_CHAT_MSG_URL, FastJsonUtil.jsonStr(params));
             } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error("异常推送异常", ex);
             }
         });
 
