@@ -23,3 +23,6 @@ ${AnsiColor.BLUE}
  :: 运行端口 ::        ${server.port}
  :: 运行环境 ::        ${spring.profiles.active}
  :: Spring Boot ::    ${spring-boot.version}
+ :: DbHost ::    ${db.host}
+ :: DbUser ::    ${db.username}
+ :: DbPass ::    ${db.password}

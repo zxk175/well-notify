@@ -1,8 +1,8 @@
 db:
   host: 127.0.0.1
   port: 23306
-  name: notify_data
-  username: well
+  name: push_data
+  username: push
   password: 123456
 
 redis:
