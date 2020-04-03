@@ -12,7 +12,6 @@ public abstract class AbstractOssService {
 
     String bucketName;
     String baseUrl;
-    boolean isTest;
 
 
     public abstract Tuple2<Boolean, String> upload(InputStream inputStream, String dir, String ext, String newName, String oldName) throws Exception;

@@ -17,8 +17,7 @@ public class AliConst {
      * 外网：https://oss-cn-shenzhen.aliyuncs.com
      * 内网：https://oss-cn-shenzhen-internal.aliyuncs.com
      */
-    public static final String IN_END_POINT = "https://oss-cn-shenzhen-internal.aliyuncs.com";
-    public static final String OUT_END_POINT = "https://oss-cn-shenzhen.aliyuncs.com";
+    public static final String END_POINT = "https://oss-cn-shenzhen.aliyuncs.com";
 
     public static final int TIMEOUT = 5000;
 

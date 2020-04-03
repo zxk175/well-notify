@@ -27,7 +27,7 @@ public class WxAccessUtil {
     public String getGlobalToken() {
         boolean isTest = SpringActiveUtil.isDebug();
         if (isTest) {
-            JSONObject result = OkHttpUtil.instance().get2Obj("http://well.zxk175.com/well/api/wx_global_token/v1");
+            JSONObject result = OkHttpUtil.instance().get2Obj("https://notify.zxk175.com/notify/wx_global_token/v1");
             return result.getString("data");
         }
 

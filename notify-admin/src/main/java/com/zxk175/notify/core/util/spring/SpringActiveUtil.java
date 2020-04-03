@@ -54,7 +54,7 @@ public class SpringActiveUtil {
     }
 
     private static boolean isDebug(String active) {
-        return (MyStrUtil.eq(Const.DEV, active) || MyStrUtil.eq(Const.TEST, active) || MyStrUtil.eq(Const.DOCKER, active));
+        return (MyStrUtil.eq(Const.DEV, active) || MyStrUtil.eq(Const.TEST, active));
     }
 
     public static String getUrlStr() {

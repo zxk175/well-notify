@@ -13,7 +13,6 @@ import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.tuple.Tuple2;
 import com.zxk175.notify.core.tuple.Tuples;
 import com.zxk175.notify.core.util.MyStrUtil;
-import com.zxk175.notify.core.util.spring.SpringActiveUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
@@ -43,14 +42,12 @@ public class AliYunOssService extends AbstractOssService {
         // 设置连接空闲超时时间。超时则关闭连接，默认为60000毫秒
         configuration.setIdleConnectionTime(AliConst.TIMEOUT);
 
-        this.isTest = SpringActiveUtil.isDebug();
-
         Tuple2<String, String> tuple = getBucketNameAndBaseUrl();
         this.bucketName = tuple.first;
         this.baseUrl = tuple.second;
 
         DefaultCredentialProvider credentialProvider = new DefaultCredentialProvider(AliConst.ALI_KEY, AliConst.ALI_SECRET);
-        ossClient = new OSSClient(isTest ? AliConst.OUT_END_POINT : AliConst.IN_END_POINT, credentialProvider, configuration);
+        ossClient = new OSSClient(AliConst.END_POINT, credentialProvider, configuration);
     }
 
     @Override
