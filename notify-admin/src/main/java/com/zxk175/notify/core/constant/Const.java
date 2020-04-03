@@ -29,7 +29,7 @@ public class Const {
 
     public static final String BASE_URL = "/notify";
 
-    public static final String WE_CHAT_MSG_URL = SpringActiveUtil.getUrlStr() + "/send/v1";
+    public static final String WE_CHAT_MSG_URL = SpringActiveUtil.getUrlStr() + "/wx-mp/msg-send/v1";
     public static final String MSG_KEY = "1129650133014663169";
 
     public static final String DATE_FORMAT_DEFAULT = "yyyy-MM-dd HH:mm:ss";
