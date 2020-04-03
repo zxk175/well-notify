@@ -63,7 +63,7 @@ public class SpringActiveUtil {
             return "http://localhost:8010/notify";
         }
 
-        return "https://well.zxk175.com/notify";
+        return "https://notify.zxk175.com/notify";
     }
 
     public static String chineseStr() {
