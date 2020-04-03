@@ -30,7 +30,7 @@ public class CommonController extends BaseController {
 
     @ResponseBody
     @RequestLimit(count = Const.LIMIT_30)
-    @GetMapping(value = "/wx_global_token/v1")
+    @GetMapping(value = "/wx-mp/global-token/v1")
     @ApiOperation(value = "获取公众号GlobalToken", notes = "获取公众号GlobalToken")
     public Response<Object> getWxGlobalTokenV1() {
         String accessToken = wxAccessUtil.getGlobalToken();
