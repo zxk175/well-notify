@@ -1,7 +1,6 @@
 package com.zxk175.notify.module.controller.wx;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
 import com.zxk175.notify.core.config.WxConfig;
 import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.http.ResponseExt;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -57,20 +57,20 @@ public class WxMpUserController extends BaseController {
         String tmpUrl = MyStrUtil.format(WxConfig.USER_LIST, accessToken, "");
         JSONObject data = OkHttpUtil.instance().get2Obj(tmpUrl);
 
-        List<Map<String, Object>> dataList = Lists.newArrayList();
-        Map<String, Object> map;
+        List<Map<String, Object>> dataList = new ArrayList<>();
+        Map<String, Object> tmpMap;
         WxMpUserListVo wxMpUserListVo = data.toJavaObject(WxMpUserListVo.class);
         for (String openId : wxMpUserListVo.getData().getOpenid()) {
-            map = new HashMap<>(8);
+            tmpMap = new HashMap<>(8);
 
             WxMpUserVo userInfo = WxMpUtil.getUserInfo(accessToken, openId);
-            map.put("openId", openId);
-            map.put("avatar", userInfo.getHeadimgurl());
-            map.put("nickName", userInfo.getNickname());
-            map.put("subscribe", userInfo.getSubscribe());
-            map.put("subscribeTime", DateUtil.formatDate(userInfo.getSubscribetime(), ""));
+            tmpMap.put("openId", openId);
+            tmpMap.put("avatar", userInfo.getHeadimgurl());
+            tmpMap.put("nickName", userInfo.getNickname());
+            tmpMap.put("subscribe", userInfo.getSubscribe());
+            tmpMap.put("subscribeTime", DateUtil.formatDate(userInfo.getSubscribetime(), ""));
 
-            dataList.add(map);
+            dataList.add(tmpMap);
         }
 
         return ResponseExt.putPageExtraFalse(dataList, wxMpUserListVo.getTotal(), param);

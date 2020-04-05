@@ -40,11 +40,8 @@ public class WxAccessUtil {
 
         if (MyStrUtil.isBlank(accessToken)) {
             String url = MyStrUtil.format(WxConfig.GLOBAL_TOKEN_URL, appId, appSecret);
-
-            // 调用接口
             JSONObject result = OkHttpUtil.instance().get2Obj(url);
 
-            // 如果请求成功
             final String resultKey = WxConfig.ACCESS_TOKEN_KEY;
             if (result.containsKey(resultKey)) {
                 accessToken = result.getString(resultKey);
