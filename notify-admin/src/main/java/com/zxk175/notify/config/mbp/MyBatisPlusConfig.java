@@ -22,29 +22,29 @@ import java.util.List;
 @EnableTransactionManagement
 @MapperScan("com.zxk175.notify.**.dao.**")
 public class MyBatisPlusConfig {
-
-
-    @Bean(name = "hikariDataSource")
-    @ConfigurationProperties("spring.datasource.hikari")
-    public HikariDataSource hikariDataSource() {
-        return new HikariDataSource();
-    }
-
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-
-        List<ISqlParser> sqlParserList = Lists.newArrayList();
-        // 攻击SQL 阻断解析器、加入解析链
-        sqlParserList.add(new MyBlockAttackSqlParser());
-        paginationInterceptor.setSqlParserList(sqlParserList);
-
-        return paginationInterceptor;
-    }
-
-    @Bean("transactionManager")
-    public DataSourceTransactionManager dataSourceTransactionManager(@Qualifier("hikariDataSource") HikariDataSource hikariDataSource) {
-        return new DataSourceTransactionManager(hikariDataSource);
-    }
-
+	
+	
+	@Bean(name = "hikariDataSource")
+	@ConfigurationProperties("spring.datasource.hikari")
+	public HikariDataSource hikariDataSource() {
+		return new HikariDataSource();
+	}
+	
+	@Bean
+	public PaginationInterceptor paginationInterceptor() {
+		PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+		
+		List<ISqlParser> sqlParserList = Lists.newArrayList();
+		// 攻击SQL 阻断解析器、加入解析链
+		sqlParserList.add(new MyBlockAttackSqlParser());
+		paginationInterceptor.setSqlParserList(sqlParserList);
+		
+		return paginationInterceptor;
+	}
+	
+	@Bean("transactionManager")
+	public DataSourceTransactionManager dataSourceTransactionManager(@Qualifier("hikariDataSource") HikariDataSource hikariDataSource) {
+		return new DataSourceTransactionManager(hikariDataSource);
+	}
+	
 }

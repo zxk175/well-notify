@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TemplateData {
-
-    private String color;
-
-    private String value;
-
+	
+	private String color;
+	
+	private String value;
+	
 }

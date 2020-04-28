@@ -31,29 +31,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(Const.BASE_URL + "/wx-mp/")
 @Api(tags = "微信公众号模板消息通知V2")
 public class WxMpTemplateMsgV2Controller extends BaseController {
-
-    private INotifyMsgService notifyMsgService;
-    private IWxTemplateMsgService templateMsgService;
-
-
-    @GetMapping("msg")
-    public String msg(Model model) {
-        model.addAttribute("title", "消息阅读 | Well");
-        return "msg";
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/msg-send/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "发送通知消息", notes = "发送通知消息")
-    public ResponseExt<Object, ?> sendMsg(@Validated @RequestBody DeviceNotifyParam param) {
-        return templateMsgService.send(param);
-    }
-
-    @ResponseBody
-    @GetMapping(value = "/msg-info/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "获取消息内容", notes = "获取消息内容")
-    public ResponseExt<Object, ?> getMsgInfo(@RequestParam(name = "msgId") String msgId) {
-        return notifyMsgService.infoNotifyMsg(msgId);
-    }
-
+	
+	private final INotifyMsgService notifyMsgService;
+	private final IWxTemplateMsgService templateMsgService;
+	
+	
+	@GetMapping("msg")
+	public String msg(Model model) {
+		model.addAttribute("title", "消息阅读 | Well");
+		return "msg";
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/msg-send/v1", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "发送通知消息", notes = "发送通知消息")
+	public ResponseExt<Object, ?> sendMsg(@Validated @RequestBody DeviceNotifyParam param) {
+		return templateMsgService.send(param);
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/msg-info/v1", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "获取消息内容", notes = "获取消息内容")
+	public ResponseExt<Object, ?> getMsgInfo(@RequestParam(name = "msgId") String msgId) {
+		return notifyMsgService.infoNotifyMsg(msgId);
+	}
+	
 }

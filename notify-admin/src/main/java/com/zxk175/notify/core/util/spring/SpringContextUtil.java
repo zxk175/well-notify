@@ -15,47 +15,47 @@ import javax.validation.constraints.NotNull;
  */
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
-
-    private static ApplicationContext applicationContext;
-
-    /**
-     * 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量
-     *
-     * @param applicationContext context对象
-     */
-    @Override
-    public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
-        setAppContext(applicationContext);
-    }
-
-    private void setAppContext(ApplicationContext applicationContext) {
-        SpringContextUtil.applicationContext = applicationContext;
-    }
-
-    private ApplicationContext getApplicationContext() {
-        checkApplicationContext();
-        return applicationContext;
-    }
-
-    public <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
-    }
-
-    public Object getBean(String name) {
-        return getApplicationContext().getBean(name);
-    }
-
-    public boolean containsBean(String name) {
-        return getApplicationContext().containsBean(name);
-    }
-
-    public boolean isSingleton(String name) {
-        return getApplicationContext().isSingleton(name);
-    }
-
-    private static void checkApplicationContext() {
-        if (applicationContext == null) {
-            throw new IllegalStateException("applicationContext未注入,请在配置中定义SpringContextUtil");
-        }
-    }
+	
+	private static ApplicationContext applicationContext;
+	
+	/**
+	 * 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量
+	 *
+	 * @param applicationContext context对象
+	 */
+	@Override
+	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
+		setAppContext(applicationContext);
+	}
+	
+	private void setAppContext(ApplicationContext applicationContext) {
+		SpringContextUtil.applicationContext = applicationContext;
+	}
+	
+	private ApplicationContext getApplicationContext() {
+		checkApplicationContext();
+		return applicationContext;
+	}
+	
+	public <T> T getBean(Class<T> clazz) {
+		return getApplicationContext().getBean(clazz);
+	}
+	
+	public Object getBean(String name) {
+		return getApplicationContext().getBean(name);
+	}
+	
+	public boolean containsBean(String name) {
+		return getApplicationContext().containsBean(name);
+	}
+	
+	public boolean isSingleton(String name) {
+		return getApplicationContext().isSingleton(name);
+	}
+	
+	private static void checkApplicationContext() {
+		if (applicationContext == null) {
+			throw new IllegalStateException("applicationContext未注入,请在配置中定义SpringContextUtil");
+		}
+	}
 }

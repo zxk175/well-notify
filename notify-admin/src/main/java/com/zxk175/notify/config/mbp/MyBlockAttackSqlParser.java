@@ -20,71 +20,71 @@ import org.apache.ibatis.reflection.MetaObject;
  * @since 2019-10-12 16:21
  */
 public class MyBlockAttackSqlParser extends AbstractJsqlParser {
-
-    @Override
-    public SqlInfo parser(MetaObject metaObject, String sql) {
-        if (this.allowProcess(metaObject)) {
-            try {
-                // 解决调用存储过程或函数时报错
-                String call = "{call";
-                String anIf = "IF";
-                if (sql.startsWith(call) || sql.contains(anIf)) {
-                    return null;
-                }
-
-                StringBuilder sqlStringBuilder = new StringBuilder();
-                Statements statements = CCJSqlParserUtil.parseStatements(sql);
-                int i = 0;
-                for (Statement statement : statements.getStatements()) {
-                    if (null != statement) {
-                        if (i++ > 0) {
-                            sqlStringBuilder.append(';');
-                        }
-                        sqlStringBuilder.append(this.processParser(statement).getSql());
-                    }
-                }
-                if (sqlStringBuilder.length() > 0) {
-                    return SqlInfo.newInstance().setSql(sqlStringBuilder.toString());
-                }
-            } catch (JSQLParserException e) {
-                throw ExceptionUtils.mpe("Failed to process, please exclude the tableName or statementId.\n Error SQL: %s", e, sql);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public SqlInfo processParser(Statement statement) {
-        if (statement instanceof Insert) {
-            this.processInsert((Insert) statement);
-        } else if (statement instanceof Select) {
-            this.processSelectBody(((Select) statement).getSelectBody());
-        } else if (statement instanceof Update) {
-            this.processUpdate((Update) statement);
-        } else if (statement instanceof Delete) {
-            this.processDelete((Delete) statement);
-        }
-        return SqlInfo.newInstance().setSql(statement.toString());
-    }
-
-    @Override
-    public void processInsert(Insert insert) {
-        // to do nothing
-    }
-
-    @Override
-    public void processDelete(Delete delete) {
-        Assert.notNull(delete.getWhere(), "Prohibition of full table deletion");
-    }
-
-    @Override
-    public void processUpdate(Update update) {
-        Assert.notNull(update.getWhere(), "Prohibition of table update operation");
-    }
-
-    @Override
-    public void processSelectBody(SelectBody selectBody) {
-        // to do nothing
-    }
-
+	
+	@Override
+	public SqlInfo parser(MetaObject metaObject, String sql) {
+		if (this.allowProcess(metaObject)) {
+			try {
+				// 解决调用存储过程或函数时报错
+				String call = "{call";
+				String anIf = "IF";
+				if (sql.startsWith(call) || sql.contains(anIf)) {
+					return null;
+				}
+				
+				StringBuilder sqlStringBuilder = new StringBuilder();
+				Statements statements = CCJSqlParserUtil.parseStatements(sql);
+				int i = 0;
+				for (Statement statement : statements.getStatements()) {
+					if (null != statement) {
+						if (i++ > 0) {
+							sqlStringBuilder.append(';');
+						}
+						sqlStringBuilder.append(this.processParser(statement).getSql());
+					}
+				}
+				if (sqlStringBuilder.length() > 0) {
+					return SqlInfo.newInstance().setSql(sqlStringBuilder.toString());
+				}
+			} catch (JSQLParserException e) {
+				throw ExceptionUtils.mpe("Failed to process, please exclude the tableName or statementId.\n Error SQL: %s", e, sql);
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public SqlInfo processParser(Statement statement) {
+		if (statement instanceof Insert) {
+			this.processInsert((Insert) statement);
+		} else if (statement instanceof Select) {
+			this.processSelectBody(((Select) statement).getSelectBody());
+		} else if (statement instanceof Update) {
+			this.processUpdate((Update) statement);
+		} else if (statement instanceof Delete) {
+			this.processDelete((Delete) statement);
+		}
+		return SqlInfo.newInstance().setSql(statement.toString());
+	}
+	
+	@Override
+	public void processInsert(Insert insert) {
+		// to do nothing
+	}
+	
+	@Override
+	public void processDelete(Delete delete) {
+		Assert.notNull(delete.getWhere(), "Prohibition of full table deletion");
+	}
+	
+	@Override
+	public void processUpdate(Update update) {
+		Assert.notNull(update.getWhere(), "Prohibition of table update operation");
+	}
+	
+	@Override
+	public void processSelectBody(SelectBody selectBody) {
+		// to do nothing
+	}
+	
 }

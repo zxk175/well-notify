@@ -20,17 +20,17 @@ import java.util.Collection;
  * @since 2019-11-27 15:35
  */
 public interface INotifyChannelService extends IService<NotifyChannel> {
-
-    Response<Object> saveNotifyChannel(NotifyChannel param);
-
-    Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param);
-
-    Response<Object> modifyNotifyChannel(NotifyChannel param);
-
-    ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param);
-
-    Response<Collection<?>> listSelectNotifyChannel();
-
-    Response<Object> infoNotifyChannel(NotifyChannelInfoParam param);
-
+	
+	Response<Object> saveNotifyChannel(NotifyChannel param);
+	
+	Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param);
+	
+	Response<Object> modifyNotifyChannel(NotifyChannel param);
+	
+	ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param);
+	
+	Response<Collection<?>> listSelectNotifyChannel();
+	
+	Response<Object> infoNotifyChannel(NotifyChannelInfoParam param);
+	
 }

@@ -32,61 +32,61 @@ import java.util.Map;
  */
 @Service
 public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, NotifyChannel> implements INotifyChannelService {
-
-    @Override
-    public Response<Object> saveNotifyChannel(NotifyChannel param) {
-        boolean flag = this.save(param);
-        return Response.saveReturn(flag);
-    }
-
-    @Override
-    @Transactional(rollbackFor = RuntimeException.class)
-    public Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param) {
-        NotifyChannel notifyChannel;
-        for (String idStr : param.getIdArr()) {
-            notifyChannel = new NotifyChannel();
-            notifyChannel.setId(Convert.toLong(idStr));
-            notifyChannel.setState(StateType.HIDE.value());
-            this.updateById(notifyChannel);
-        }
-
-        return Response.removeReturn(true);
-    }
-
-    @Override
-    public Response<Object> modifyNotifyChannel(NotifyChannel param) {
-        boolean flag = this.updateById(param);
-        return Response.modifyReturn(flag);
-    }
-
-    @Override
-    public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param) {
-        CommonUtil.buildPageParam(param);
-
-        List<Map<String, Object>> dataList = baseMapper.listNotifyChannel(param);
-
-        Long count = baseMapper.countNotifyChannel(param);
-
-        return ResponseExt.putPageExtraFalse(dataList, count, param);
-    }
-
-    @Override
-    public Response<Collection<?>> listSelectNotifyChannel() {
-        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-        notifyChannelQw.select("id AS `value`, channel_name AS `view`");
-        notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
-        notifyChannelQw.orderByDesc("create_time");
-        List<Map<String, Object>> records = this.listMaps(notifyChannelQw);
-        return Response.collReturn(records);
-    }
-
-    @Override
-    public Response<Object> infoNotifyChannel(NotifyChannelInfoParam param) {
-        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-        notifyChannelQw.select("id AS channelId, channel_name AS channelName, state");
-        notifyChannelQw.eq("id", param.getChannelId());
-        Map<String, Object> record = this.getMap(notifyChannelQw);
-        return Response.objectReturn(record);
-    }
-
+	
+	@Override
+	public Response<Object> saveNotifyChannel(NotifyChannel param) {
+		boolean flag = this.save(param);
+		return Response.saveReturn(flag);
+	}
+	
+	@Override
+	@Transactional(rollbackFor = RuntimeException.class)
+	public Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param) {
+		NotifyChannel notifyChannel;
+		for (String idStr : param.getIdArr()) {
+			notifyChannel = new NotifyChannel();
+			notifyChannel.setId(Convert.toLong(idStr));
+			notifyChannel.setState(StateType.HIDE.value());
+			this.updateById(notifyChannel);
+		}
+		
+		return Response.removeReturn(true);
+	}
+	
+	@Override
+	public Response<Object> modifyNotifyChannel(NotifyChannel param) {
+		boolean flag = this.updateById(param);
+		return Response.modifyReturn(flag);
+	}
+	
+	@Override
+	public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param) {
+		CommonUtil.buildPageParam(param);
+		
+		List<Map<String, Object>> dataList = baseMapper.listNotifyChannel(param);
+		
+		Long count = baseMapper.countNotifyChannel(param);
+		
+		return ResponseExt.putPageExtraFalse(dataList, count, param);
+	}
+	
+	@Override
+	public Response<Collection<?>> listSelectNotifyChannel() {
+		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+		notifyChannelQw.select("id AS `value`, channel_name AS `view`");
+		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyChannelQw.orderByDesc("create_time");
+		List<Map<String, Object>> records = this.listMaps(notifyChannelQw);
+		return Response.collReturn(records);
+	}
+	
+	@Override
+	public Response<Object> infoNotifyChannel(NotifyChannelInfoParam param) {
+		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+		notifyChannelQw.select("id AS channelId, channel_name AS channelName, state");
+		notifyChannelQw.eq("id", param.getChannelId());
+		Map<String, Object> record = this.getMap(notifyChannelQw);
+		return Response.objectReturn(record);
+	}
+	
 }

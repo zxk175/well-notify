@@ -20,41 +20,41 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class WxAccessUtil {
-
-    private StringRedisUtil stringRedisUtil;
-
-
-    public String getGlobalToken() {
-        boolean isTest = SpringActiveUtil.isDebug();
-        if (isTest) {
-            JSONObject result = OkHttpUtil.instance().get2Obj("https://notify.zxk175.com/notify/wx-mp/global-token/v1");
-            return result.getString("data");
-        }
-
-        Tuple2<String, String> tuple = getAppIdAndSecret();
-        return getGlobalTokenCommon(WxConfig.GLOBAL_TOKEN_KEY, tuple.first, tuple.second);
-    }
-
-    private String getGlobalTokenCommon(String key, String appId, String appSecret) {
-        String accessToken = stringRedisUtil.get(key);
-
-        if (MyStrUtil.isBlank(accessToken)) {
-            String url = MyStrUtil.format(WxConfig.GLOBAL_TOKEN_URL, appId, appSecret);
-            JSONObject result = OkHttpUtil.instance().get2Obj(url);
-
-            final String resultKey = WxConfig.ACCESS_TOKEN_KEY;
-            if (result.containsKey(resultKey)) {
-                accessToken = result.getString(resultKey);
-
-                stringRedisUtil.set(key, accessToken, WxConfig.ACCESS_TOKEN_TTL);
-            }
-        }
-
-        return accessToken;
-    }
-
-    private Tuple2<String, String> getAppIdAndSecret() {
-        return Tuples.tuple(WxConfig.MP_APP_ID, WxConfig.MP_APP_SECRET);
-    }
-
+	
+	private final StringRedisUtil stringRedisUtil;
+	
+	
+	public String getGlobalToken() {
+		boolean isTest = SpringActiveUtil.isDebug();
+		if (isTest) {
+			JSONObject result = OkHttpUtil.instance().get2Obj("https://notify.zxk175.com/notify/wx-mp/global-token/v1");
+			return result.getString("data");
+		}
+		
+		Tuple2<String, String> tuple = getAppIdAndSecret();
+		return getGlobalTokenCommon(WxConfig.GLOBAL_TOKEN_KEY, tuple.first, tuple.second);
+	}
+	
+	private String getGlobalTokenCommon(String key, String appId, String appSecret) {
+		String accessToken = stringRedisUtil.get(key);
+		
+		if (MyStrUtil.isBlank(accessToken)) {
+			String url = MyStrUtil.format(WxConfig.GLOBAL_TOKEN_URL, appId, appSecret);
+			JSONObject result = OkHttpUtil.instance().get2Obj(url);
+			
+			final String resultKey = WxConfig.ACCESS_TOKEN_KEY;
+			if (result.containsKey(resultKey)) {
+				accessToken = result.getString(resultKey);
+				
+				stringRedisUtil.set(key, accessToken, WxConfig.ACCESS_TOKEN_TTL);
+			}
+		}
+		
+		return accessToken;
+	}
+	
+	private Tuple2<String, String> getAppIdAndSecret() {
+		return Tuples.tuple(WxConfig.MP_APP_ID, WxConfig.MP_APP_SECRET);
+	}
+	
 }

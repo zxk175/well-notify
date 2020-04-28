@@ -30,38 +30,38 @@ import java.util.Date;
  * 7. jti -- jwt唯一标识,防止重复使用
  */
 public class JwTokenUtil {
-
-    public static TokenVo buildToken(SysSubjectVo sysSubjectVo) {
-        String subjectStr = FastJsonUtil.jsonStr(sysSubjectVo);
-        Date now = new Date();
-
-        // 添加构成jwt的参数
-        JwtBuilder builder = Jwts.builder()
-                // head参数
-                .setHeaderParam("typ", "JWT")
-                // 创建时间
-                .setIssuedAt(now)
-                // 所有者
-                .setSubject(subjectStr)
-                // 压缩
-                .compressWith(CompressionCodecs.GZIP)
-                // 加密方式
-                .signWith(SignatureAlgorithm.HS512, getKeyInstance());
-
-        // 过期时间
-        int tokenTtlHours = Const.TOKEN_TTL_HOURS;
-        Date exp = DateUtil.datePlus(Calendar.HOUR_OF_DAY, now, tokenTtlHours);
-        // jwt过期时间
-        builder.setExpiration(exp);
-
-        // 生成jwt
-        return new TokenVo((long) (tokenTtlHours), builder.compact(), exp.getTime());
-    }
-
-    static Key getKeyInstance() {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(Const.TOKEN_DESC_KEY);
-        return new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-    }
-
+	
+	public static TokenVo buildToken(SysSubjectVo sysSubjectVo) {
+		String subjectStr = FastJsonUtil.jsonStr(sysSubjectVo);
+		Date now = new Date();
+		
+		// 添加构成jwt的参数
+		JwtBuilder builder = Jwts.builder()
+				// head参数
+				.setHeaderParam("typ", "JWT")
+				// 创建时间
+				.setIssuedAt(now)
+				// 所有者
+				.setSubject(subjectStr)
+				// 压缩
+				.compressWith(CompressionCodecs.GZIP)
+				// 加密方式
+				.signWith(SignatureAlgorithm.HS512, getKeyInstance());
+		
+		// 过期时间
+		int tokenTtlHours = Const.TOKEN_TTL_HOURS;
+		Date exp = DateUtil.datePlus(Calendar.HOUR_OF_DAY, now, tokenTtlHours);
+		// jwt过期时间
+		builder.setExpiration(exp);
+		
+		// 生成jwt
+		return new TokenVo((long) (tokenTtlHours), builder.compact(), exp.getTime());
+	}
+	
+	static Key getKeyInstance() {
+		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
+		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(Const.TOKEN_DESC_KEY);
+		return new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+	}
+	
 }

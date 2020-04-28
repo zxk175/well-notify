@@ -12,49 +12,49 @@ import java.io.InputStream;
  * @since 2019-10-12 16:18
  */
 public class MyServletInputStream extends ServletInputStream {
-
-    private final InputStream sourceStream;
-    private boolean finished = false;
-
-
-    MyServletInputStream(InputStream sourceStream) {
-        Assert.notNull(sourceStream, "Source InputStream must not be null");
-        this.sourceStream = sourceStream;
-    }
-
-    @Override
-    public int read() throws IOException {
-        int data = this.sourceStream.read();
-        if (-1 == data) {
-            this.finished = true;
-        }
-        return data;
-    }
-
-    @Override
-    public int available() throws IOException {
-        return this.sourceStream.available();
-    }
-
-    @Override
-    public void close() throws IOException {
-        super.close();
-        this.sourceStream.close();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return this.finished;
-    }
-
-    @Override
-    public boolean isReady() {
-        return true;
-    }
-
-    @Override
-    public void setReadListener(ReadListener readListener) {
-        throw new UnsupportedOperationException();
-    }
-
+	
+	private final InputStream sourceStream;
+	private boolean finished = false;
+	
+	
+	MyServletInputStream(InputStream sourceStream) {
+		Assert.notNull(sourceStream, "Source InputStream must not be null");
+		this.sourceStream = sourceStream;
+	}
+	
+	@Override
+	public int read() throws IOException {
+		int data = this.sourceStream.read();
+		if (-1 == data) {
+			this.finished = true;
+		}
+		return data;
+	}
+	
+	@Override
+	public int available() throws IOException {
+		return this.sourceStream.available();
+	}
+	
+	@Override
+	public void close() throws IOException {
+		super.close();
+		this.sourceStream.close();
+	}
+	
+	@Override
+	public boolean isFinished() {
+		return this.finished;
+	}
+	
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+	
+	@Override
+	public void setReadListener(ReadListener readListener) {
+		throw new UnsupportedOperationException();
+	}
+	
 }

@@ -34,44 +34,44 @@ import java.util.Collection;
 @RequestMapping(Const.BASE_URL + "/notify-channel")
 @Api(tags = "通知通道")
 public class NotifyChannelController extends BaseController {
-
-    private INotifyChannelService notifyChannelService;
-
-
-    @PostMapping(value = "/save/v1")
-    @ApiOperation(value = "添加通道", notes = "添加通道")
-    public Response<Object> saveNotifyChannel(@Validated @RequestBody NotifyChannel param) {
-        return notifyChannelService.saveNotifyChannel(param);
-    }
-
-    @PostMapping(value = "/remove/v1")
-    @ApiOperation(value = "删除通道", notes = "删除通道")
-    public Response<Object> removeNotifyChannel(@Validated @RequestBody NotifyChannelRemoveParam param) {
-        return notifyChannelService.removeNotifyChannel(param);
-    }
-
-    @PostMapping(value = "/modify/v1")
-    @ApiOperation(value = "修改通道", notes = "修改通道")
-    public Response<Object> modifyNotifyChannel(@Validated @RequestBody NotifyChannel param) {
-        return notifyChannelService.modifyNotifyChannel(param);
-    }
-
-    @PostMapping(value = "/list/v1")
-    @ApiOperation(value = "通道列表", notes = "通道列表")
-    public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(@Validated @RequestBody NotifyChannelListParam param) {
-        return notifyChannelService.listNotifyChannelPage(param);
-    }
-
-    @PostMapping(value = "/list-select/v1")
-    @ApiOperation(value = "通道下拉框", notes = "通道下拉框")
-    public Response<Collection<?>> listSelectNotifyChannel() {
-        return notifyChannelService.listSelectNotifyChannel();
-    }
-
-    @PostMapping(value = "/info/v1")
-    @ApiOperation(value = "通道详情", notes = "通道详情")
-    public Response<Object> infoNotifyChannel(@Validated @RequestBody NotifyChannelInfoParam param) {
-        return notifyChannelService.infoNotifyChannel(param);
-    }
-
+	
+	private final INotifyChannelService notifyChannelService;
+	
+	
+	@PostMapping(value = "/save/v1")
+	@ApiOperation(value = "添加通道", notes = "添加通道")
+	public Response<Object> saveNotifyChannel(@Validated @RequestBody NotifyChannel param) {
+		return notifyChannelService.saveNotifyChannel(param);
+	}
+	
+	@PostMapping(value = "/remove/v1")
+	@ApiOperation(value = "删除通道", notes = "删除通道")
+	public Response<Object> removeNotifyChannel(@Validated @RequestBody NotifyChannelRemoveParam param) {
+		return notifyChannelService.removeNotifyChannel(param);
+	}
+	
+	@PostMapping(value = "/modify/v1")
+	@ApiOperation(value = "修改通道", notes = "修改通道")
+	public Response<Object> modifyNotifyChannel(@Validated @RequestBody NotifyChannel param) {
+		return notifyChannelService.modifyNotifyChannel(param);
+	}
+	
+	@PostMapping(value = "/list/v1")
+	@ApiOperation(value = "通道列表", notes = "通道列表")
+	public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(@Validated @RequestBody NotifyChannelListParam param) {
+		return notifyChannelService.listNotifyChannelPage(param);
+	}
+	
+	@PostMapping(value = "/list-select/v1")
+	@ApiOperation(value = "通道下拉框", notes = "通道下拉框")
+	public Response<Collection<?>> listSelectNotifyChannel() {
+		return notifyChannelService.listSelectNotifyChannel();
+	}
+	
+	@PostMapping(value = "/info/v1")
+	@ApiOperation(value = "通道详情", notes = "通道详情")
+	public Response<Object> infoNotifyChannel(@Validated @RequestBody NotifyChannelInfoParam param) {
+		return notifyChannelService.infoNotifyChannel(param);
+	}
+	
 }

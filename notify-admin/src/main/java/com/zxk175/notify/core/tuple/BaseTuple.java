@@ -14,23 +14,23 @@ import java.util.Spliterator;
  */
 @Data
 abstract class BaseTuple implements Iterable<Object>, Serializable {
-
-    private final List<Object> valueList;
-
-
-    BaseTuple(final Object... objects) {
-        // 其实就是简单的数组，只是包装成List，方便使用List的api进行元素操作
-        this.valueList = Arrays.asList(objects);
-    }
-
-
-    @Override
-    public final Iterator<Object> iterator() {
-        return this.valueList.iterator();
-    }
-
-    @Override
-    public final Spliterator<Object> spliterator() {
-        return this.valueList.spliterator();
-    }
+	
+	private final List<Object> valueList;
+	
+	
+	BaseTuple(final Object... objects) {
+		// 其实就是简单的数组，只是包装成List，方便使用List的api进行元素操作
+		this.valueList = Arrays.asList(objects);
+	}
+	
+	
+	@Override
+	public final Iterator<Object> iterator() {
+		return this.valueList.iterator();
+	}
+	
+	@Override
+	public final Spliterator<Object> spliterator() {
+		return this.valueList.spliterator();
+	}
 }

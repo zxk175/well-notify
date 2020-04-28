@@ -17,19 +17,19 @@ import javax.servlet.Filter;
  */
 @Configuration
 public class SystemFilterConfig {
-
-    @Bean
-    public FilterRegistrationBean<Filter> repeatedlyReadFilterRegistration() {
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
-
-        registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new RepeatedlyReadFilter());
-        registration.setName("RepeatedlyReadFilter");
-        registration.addUrlPatterns("/*");
-        registration.setEnabled(true);
-        registration.setOrder(1);
-
-        return registration;
-    }
-
+	
+	@Bean
+	public FilterRegistrationBean<Filter> repeatedlyReadFilterRegistration() {
+		FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
+		
+		registration.setDispatcherTypes(DispatcherType.REQUEST);
+		registration.setFilter(new RepeatedlyReadFilter());
+		registration.setName("RepeatedlyReadFilter");
+		registration.addUrlPatterns("/*");
+		registration.setEnabled(true);
+		registration.setOrder(1);
+		
+		return registration;
+	}
+	
 }

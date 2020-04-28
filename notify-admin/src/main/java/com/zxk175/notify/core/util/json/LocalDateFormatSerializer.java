@@ -12,26 +12,26 @@ import java.time.format.DateTimeFormatter;
  * @since 2020-03-29 13:23
  */
 public class LocalDateFormatSerializer implements ObjectSerializer {
-
-    private final String pattern;
-
-    public LocalDateFormatSerializer(String pattern) {
-        this.pattern = pattern;
-    }
-
-
-    @Override
-    public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features) {
-        if (object == null) {
-            serializer.out.writeNull();
-            return;
-        }
-
-        LocalDateTime localDateTime = (LocalDateTime) object;
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-        String text = dateTimeFormatter.format(localDateTime);
-
-        serializer.write(text);
-    }
-
+	
+	private final String pattern;
+	
+	public LocalDateFormatSerializer(String pattern) {
+		this.pattern = pattern;
+	}
+	
+	
+	@Override
+	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features) {
+		if (object == null) {
+			serializer.out.writeNull();
+			return;
+		}
+		
+		LocalDateTime localDateTime = (LocalDateTime) object;
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+		String text = dateTimeFormatter.format(localDateTime);
+		
+		serializer.write(text);
+	}
+	
 }

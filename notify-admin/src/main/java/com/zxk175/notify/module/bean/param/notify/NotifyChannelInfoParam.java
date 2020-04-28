@@ -10,9 +10,9 @@ import lombok.Data;
  */
 @Data
 public class NotifyChannelInfoParam {
-
-    @NotBlank
-    @ApiModelProperty(value = "通道Id", example = "0")
-    private String channelId;
-
+	
+	@NotBlank
+	@ApiModelProperty(value = "通道Id", example = "0")
+	private String channelId;
+	
 }

@@ -12,21 +12,21 @@ import java.util.concurrent.Callable;
  * @since 2020-03-29 13:43
  */
 public class DeviceNotifyCallable implements Callable<Tuple2<String, String>> {
-
-    private DeviceNotifyData deviceNotifyData;
-    private WxTemplateMsgUtil wxTemplateMsgUtil;
-
-
-    public DeviceNotifyCallable(DeviceNotifyData deviceNotifyData, WxTemplateMsgUtil wxTemplateMsgUtil) {
-        this.deviceNotifyData = deviceNotifyData;
-        this.wxTemplateMsgUtil = wxTemplateMsgUtil;
-    }
-
-    @Override
-    public Tuple2<String, String> call() {
-        TemplateMessage templateMessage = wxTemplateMsgUtil.buildDeviceNotifyData(deviceNotifyData);
-
-        return wxTemplateMsgUtil.sendWxTemplateMsg(templateMessage);
-    }
-
+	
+	private final DeviceNotifyData deviceNotifyData;
+	private final WxTemplateMsgUtil wxTemplateMsgUtil;
+	
+	
+	public DeviceNotifyCallable(DeviceNotifyData deviceNotifyData, WxTemplateMsgUtil wxTemplateMsgUtil) {
+		this.deviceNotifyData = deviceNotifyData;
+		this.wxTemplateMsgUtil = wxTemplateMsgUtil;
+	}
+	
+	@Override
+	public Tuple2<String, String> call() {
+		TemplateMessage templateMessage = wxTemplateMsgUtil.buildDeviceNotifyData(deviceNotifyData);
+		
+		return wxTemplateMsgUtil.sendWxTemplateMsg(templateMessage);
+	}
+	
 }

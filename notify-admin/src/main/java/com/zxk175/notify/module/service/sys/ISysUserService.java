@@ -14,9 +14,9 @@ import com.zxk175.notify.module.pojo.sys.SysUser;
  * @since 2019-11-27 15:35
  */
 public interface ISysUserService extends IService<SysUser> {
-
-    Response<Object> register(SysUser param);
-
-    Response<Object> login(SysUserLoginParam param);
-
+	
+	Response<Object> register(SysUser param);
+	
+	Response<Object> login(SysUserLoginParam param);
+	
 }

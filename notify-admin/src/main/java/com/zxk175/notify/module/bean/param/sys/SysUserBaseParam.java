@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysUserBaseParam {
-
-    @NotBlank(message = "{user.id.not.blank}")
-    @ApiModelProperty(value = "用户Id", example = Const.DEFAULT_UID)
-    private String userId;
-
+	
+	@NotBlank(message = "{user.id.not.blank}")
+	@ApiModelProperty(value = "用户Id", example = Const.DEFAULT_UID)
+	private String userId;
+	
 }

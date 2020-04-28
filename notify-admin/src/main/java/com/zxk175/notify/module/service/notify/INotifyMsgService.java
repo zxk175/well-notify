@@ -13,7 +13,7 @@ import com.zxk175.notify.module.pojo.notify.NotifyMsg;
  * @since 2019-11-27 15:35
  */
 public interface INotifyMsgService extends IService<NotifyMsg> {
-
-    ResponseExt<Object, ?> infoNotifyMsg(String msgId);
-
+	
+	ResponseExt<Object, ?> infoNotifyMsg(String msgId);
+	
 }

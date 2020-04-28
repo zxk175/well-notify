@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Data
 public class WxMpUserListDataVo {
-
-    private List<String> openid;
-
+	
+	private List<String> openid;
+	
 }

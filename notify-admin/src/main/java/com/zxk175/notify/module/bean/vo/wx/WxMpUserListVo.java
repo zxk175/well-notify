@@ -8,13 +8,13 @@ import lombok.Data;
  */
 @Data
 public class WxMpUserListVo {
-
-    private Long total;
-
-    private Long count;
-
-    private WxMpUserListDataVo data;
-
-    private String next_openid;
-
+	
+	private Long total;
+	
+	private Long count;
+	
+	private WxMpUserListDataVo data;
+	
+	private String next_openid;
+	
 }

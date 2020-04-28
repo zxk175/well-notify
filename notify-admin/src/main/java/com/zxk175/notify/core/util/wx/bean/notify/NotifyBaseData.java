@@ -8,15 +8,15 @@ import lombok.Data;
  */
 @Data
 public class NotifyBaseData {
-
-    private String url;
-
-    private String first;
-
-    private String remark;
-
-    private String openId;
-
-    private String templateId;
-
+	
+	private String url;
+	
+	private String first;
+	
+	private String remark;
+	
+	private String openId;
+	
+	private String templateId;
+	
 }

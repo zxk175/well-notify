@@ -12,21 +12,21 @@ import java.time.LocalDateTime;
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
-
-    @Override
-    public void insertFill(MetaObject metaObject) {
-        LocalDateTime now = LocalDateTime.now();
-        setMetaValue(metaObject, "createTime", now);
-        setMetaValue(metaObject, "updateTime", now);
-    }
-
-    @Override
-    public void updateFill(MetaObject metaObject) {
-        setMetaValue(metaObject, "updateTime", LocalDateTime.now());
-    }
-
-    private void setMetaValue(MetaObject metaObject, String key, Object value) {
-        setFieldValByName(key, value, metaObject);
-    }
-
+	
+	@Override
+	public void insertFill(MetaObject metaObject) {
+		LocalDateTime now = LocalDateTime.now();
+		setMetaValue(metaObject, "createTime", now);
+		setMetaValue(metaObject, "updateTime", now);
+	}
+	
+	@Override
+	public void updateFill(MetaObject metaObject) {
+		setMetaValue(metaObject, "updateTime", LocalDateTime.now());
+	}
+	
+	private void setMetaValue(MetaObject metaObject, String key, Object value) {
+		setFieldValByName(key, value, metaObject);
+	}
+	
 }

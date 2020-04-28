@@ -39,91 +39,91 @@ import java.util.concurrent.FutureTask;
 @Service
 @AllArgsConstructor
 public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
-
-    private INotifyMsgService notifyMsgService;
-    private WxTemplateMsgUtil wxTemplateMsgUtil;
-    private INotifyChannelService notifyChannelService;
-    private INotifyChannelUserService notifyChannelUserService;
-
-
-    @Override
-    public ResponseExt<Object, ?> send(DeviceNotifyParam param) {
-        String sendKey = param.getSendKey();
-        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-        notifyChannelQw.select("id, channel_name, state");
-        notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
-        notifyChannelQw.eq("id", sendKey);
-        NotifyChannel notifyChannelDb = notifyChannelService.getOne(notifyChannelQw);
-        if (ObjectUtil.isNull(notifyChannelDb)) {
-            return ResponseExt.failure("sendKey不合法");
-        }
-
-        QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
-        notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
-        notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
-        notifyChannelUserQw.eq("channel_id", notifyChannelDb.getId());
-        List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.list(notifyChannelUserQw);
-        if (CollUtil.isEmpty(notifyChannelUsers)) {
-            return ResponseExt.failure("无人订阅");
-        }
-
-        try {
-            return notifyCommon(param, notifyChannelDb, notifyChannelUsers);
-        } catch (Exception ex) {
-            log.error("发送服务异常", ex);
-            return ResponseExt.failure("发送服务异常");
-        }
-    }
-
-    private ResponseExt<Object, ?> notifyCommon(DeviceNotifyParam param, NotifyChannel notifyChannel, List<NotifyChannelUser> notifyChannelUsers) throws Exception {
-        NotifyMsg notifyMsg = new NotifyMsg();
-        String title = param.getTitle();
-        String content = param.getContent();
-        notifyMsg.setTitle(title);
-        notifyMsg.setContent(content);
-
-        boolean save = notifyMsgService.save(notifyMsg);
-        if (save) {
-            // 创建一个线程池
-            ExecutorService executorService = ThreadUtil.newExecutor(notifyChannelUsers.size(), "WxNotify");
-            // 创建多个有返回值的任务
-            List<FutureTask<Tuple2<String, String>>> futureTasks = new ArrayList<>();
-            for (NotifyChannelUser channelUser : notifyChannelUsers) {
-                String openId = channelUser.getOpenId();
-                if (MyStrUtil.isBlank(openId)) {
-                    continue;
-                }
-
-                DeviceNotifyData deviceNotifyData = new DeviceNotifyData();
-                deviceNotifyData.setOpenId(openId);
-                deviceNotifyData.setTemplateId(WxConfig.DEVICE_ID);
-                deviceNotifyData.setFirst(title);
-                deviceNotifyData.setChannelName(notifyChannel.getChannelName());
-                deviceNotifyData.setUrl(SpringActiveUtil.getUrlStr() + "/msg?msgId=" + notifyMsg.getId());
-
-                DeviceNotifyCallable callable = new DeviceNotifyCallable(deviceNotifyData, wxTemplateMsgUtil);
-                FutureTask<Tuple2<String, String>> futureTask = new FutureTask<>(callable);
-
-                // 提交异步任务到线程池，让线程池管理任务
-                // 由于是异步并行任务，所以这里并不会阻塞
-                executorService.submit(futureTask);
-
-                futureTasks.add(futureTask);
-            }
-
-            // 关闭线程池
-            executorService.shutdown();
-
-            List<Tuple2<String, String>> tuples = new ArrayList<>();
-            // 获取所有并发任务的运行结果
-            for (FutureTask<Tuple2<String, String>> future : futureTasks) {
-                final Tuple2<String, String> result = future.get();
-                tuples.add(result);
-            }
-
-            return ResponseExt.success(tuples);
-        }
-
-        return ResponseExt.failure("发送失败");
-    }
+	
+	private final INotifyMsgService notifyMsgService;
+	private final WxTemplateMsgUtil wxTemplateMsgUtil;
+	private final INotifyChannelService notifyChannelService;
+	private final INotifyChannelUserService notifyChannelUserService;
+	
+	
+	@Override
+	public ResponseExt<Object, ?> send(DeviceNotifyParam param) {
+		String sendKey = param.getSendKey();
+		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+		notifyChannelQw.select("id, channel_name, state");
+		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyChannelQw.eq("id", sendKey);
+		NotifyChannel notifyChannelDb = notifyChannelService.getOne(notifyChannelQw);
+		if (ObjectUtil.isNull(notifyChannelDb)) {
+			return ResponseExt.failure("sendKey不合法");
+		}
+		
+		QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
+		notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
+		notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyChannelUserQw.eq("channel_id", notifyChannelDb.getId());
+		List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.list(notifyChannelUserQw);
+		if (CollUtil.isEmpty(notifyChannelUsers)) {
+			return ResponseExt.failure("无人订阅");
+		}
+		
+		try {
+			return notifyCommon(param, notifyChannelDb, notifyChannelUsers);
+		} catch (Exception ex) {
+			log.error("发送服务异常", ex);
+			return ResponseExt.failure("发送服务异常");
+		}
+	}
+	
+	private ResponseExt<Object, ?> notifyCommon(DeviceNotifyParam param, NotifyChannel notifyChannel, List<NotifyChannelUser> notifyChannelUsers) throws Exception {
+		NotifyMsg notifyMsg = new NotifyMsg();
+		String title = param.getTitle();
+		String content = param.getContent();
+		notifyMsg.setTitle(title);
+		notifyMsg.setContent(content);
+		
+		boolean save = notifyMsgService.save(notifyMsg);
+		if (save) {
+			// 创建一个线程池
+			ExecutorService executorService = ThreadUtil.newExecutor(notifyChannelUsers.size(), "WxNotify");
+			// 创建多个有返回值的任务
+			List<FutureTask<Tuple2<String, String>>> futureTasks = new ArrayList<>();
+			for (NotifyChannelUser channelUser : notifyChannelUsers) {
+				String openId = channelUser.getOpenId();
+				if (MyStrUtil.isBlank(openId)) {
+					continue;
+				}
+				
+				DeviceNotifyData deviceNotifyData = new DeviceNotifyData();
+				deviceNotifyData.setOpenId(openId);
+				deviceNotifyData.setTemplateId(WxConfig.DEVICE_ID);
+				deviceNotifyData.setFirst(title);
+				deviceNotifyData.setChannelName(notifyChannel.getChannelName());
+				deviceNotifyData.setUrl(SpringActiveUtil.getUrlStr() + "/msg?msgId=" + notifyMsg.getId());
+				
+				DeviceNotifyCallable callable = new DeviceNotifyCallable(deviceNotifyData, wxTemplateMsgUtil);
+				FutureTask<Tuple2<String, String>> futureTask = new FutureTask<>(callable);
+				
+				// 提交异步任务到线程池，让线程池管理任务
+				// 由于是异步并行任务，所以这里并不会阻塞
+				executorService.submit(futureTask);
+				
+				futureTasks.add(futureTask);
+			}
+			
+			// 关闭线程池
+			executorService.shutdown();
+			
+			List<Tuple2<String, String>> tuples = new ArrayList<>();
+			// 获取所有并发任务的运行结果
+			for (FutureTask<Tuple2<String, String>> future : futureTasks) {
+				final Tuple2<String, String> result = future.get();
+				tuples.add(result);
+			}
+			
+			return ResponseExt.success(tuples);
+		}
+		
+		return ResponseExt.failure("发送失败");
+	}
 }

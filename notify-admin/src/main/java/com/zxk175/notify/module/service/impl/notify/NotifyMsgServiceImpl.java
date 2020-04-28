@@ -22,15 +22,15 @@ import java.util.Map;
  */
 @Service
 public class NotifyMsgServiceImpl extends ServiceImpl<NotifyMsgDao, NotifyMsg> implements INotifyMsgService {
-
-    @Override
-    public ResponseExt<Object, ?> infoNotifyMsg(String msgId) {
-        QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
-        notifyMsgQw.select("title, content");
-        notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
-        notifyMsgQw.eq("id", msgId);
-        Map<String, Object> notifyMsg = this.getMap(notifyMsgQw);
-        return ResponseExt.objectReturn(notifyMsg);
-    }
-
+	
+	@Override
+	public ResponseExt<Object, ?> infoNotifyMsg(String msgId) {
+		QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
+		notifyMsgQw.select("title, content");
+		notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyMsgQw.eq("id", msgId);
+		Map<String, Object> notifyMsg = this.getMap(notifyMsgQw);
+		return ResponseExt.objectReturn(notifyMsg);
+	}
+	
 }

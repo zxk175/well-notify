@@ -13,11 +13,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysUserListParam extends PageParam {
-
-    @ApiModelProperty(value = "用户Id", hidden = true)
-    private String userId;
-
-    @ApiModelProperty(value = "手机号", example = Const.DEFAULT_MOBILE)
-    private String mobile;
-
+	
+	@ApiModelProperty(value = "用户Id", hidden = true)
+	private String userId;
+	
+	@ApiModelProperty(value = "手机号", example = Const.DEFAULT_MOBILE)
+	private String mobile;
+	
 }

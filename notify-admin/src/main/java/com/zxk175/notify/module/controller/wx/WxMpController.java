@@ -22,23 +22,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(Const.BASE_URL + "/wx-mp")
 @Api(tags = "微信公众号")
 public class WxMpController extends BaseController {
-
-    @ResponseBody
-    @GetMapping(value = "/main/v1")
-    @ApiOperation(value = "Token验证", notes = "Token验证")
-    public String wxAuthGet() {
-        return WxSignUtil.checkSign(request, WxConfig.WX_MP_TOKEN);
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/main/v1")
-    @ApiOperation(value = "解析Post请求", notes = "解析Post请求")
-    public String parsePost() throws Exception {
-        request.setCharacterEncoding(Const.UTF_8);
-        response.setContentType("text/xml;charset=utf-8");
-
-        // 默认返回的文本消息
-        return "";
-    }
-
+	
+	@ResponseBody
+	@GetMapping(value = "/main/v1")
+	@ApiOperation(value = "Token验证", notes = "Token验证")
+	public String wxAuthGet() {
+		return WxSignUtil.checkSign(request, WxConfig.WX_MP_TOKEN);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/main/v1")
+	@ApiOperation(value = "解析Post请求", notes = "解析Post请求")
+	public String parsePost() throws Exception {
+		request.setCharacterEncoding(Const.UTF_8);
+		response.setContentType("text/xml;charset=utf-8");
+		
+		// 默认返回的文本消息
+		return "";
+	}
+	
 }

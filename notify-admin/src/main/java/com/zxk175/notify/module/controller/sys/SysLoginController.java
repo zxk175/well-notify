@@ -25,22 +25,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(Const.BASE_URL + "/sys")
 @Api(tags = "系统登录")
 public class SysLoginController extends BaseController {
-
-    private ISysUserService sysUserService;
-
-
-    @ResponseBody
-    @PostMapping("/register/v1")
-    @ApiOperation(value = "系统用户注册", notes = "系统用户注册")
-    public Response<Object> register(@Validated @RequestBody SysUser param) {
-        return sysUserService.register(param);
-    }
-
-    @ResponseBody
-    @PostMapping("/login/v1")
-    @ApiOperation(value = "系统用户登录", notes = "系统用户登录")
-    public Response<Object> login(@Validated @RequestBody SysUserLoginParam param) {
-        return sysUserService.login(param);
-    }
-
+	
+	private final ISysUserService sysUserService;
+	
+	
+	@ResponseBody
+	@PostMapping("/register/v1")
+	@ApiOperation(value = "系统用户注册", notes = "系统用户注册")
+	public Response<Object> register(@Validated @RequestBody SysUser param) {
+		return sysUserService.register(param);
+	}
+	
+	@ResponseBody
+	@PostMapping("/login/v1")
+	@ApiOperation(value = "系统用户登录", notes = "系统用户登录")
+	public Response<Object> login(@Validated @RequestBody SysUserLoginParam param) {
+		return sysUserService.login(param);
+	}
+	
 }

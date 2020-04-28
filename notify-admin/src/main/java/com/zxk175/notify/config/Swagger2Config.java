@@ -25,34 +25,34 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
-
-    @Bean
-    public Docket createAppApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                // 禁用默认的响应
-                .useDefaultResponseMessages(false)
-                // 设置为true，以使文档代码生成友好
-                .forCodeGeneration(true)
-                .select()
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                .build()
-                .securitySchemes(security());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Well-Notify API项目")
-                .contact(new Contact("张小康", "https://zxk175.com", "zxk175@qq.com"))
-                .version("1.0.0")
-                .build();
-    }
-
-    private List<ApiKey> security() {
-        List<ApiKey> apiKeys = new ArrayList<>();
-        apiKeys.add(new ApiKey("token", "token", "header"));
-        return apiKeys;
-    }
-
+	
+	@Bean
+	public Docket createAppApi() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.apiInfo(apiInfo())
+				// 禁用默认的响应
+				.useDefaultResponseMessages(false)
+				// 设置为true，以使文档代码生成友好
+				.forCodeGeneration(true)
+				.select()
+				.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+				.paths(PathSelectors.any())
+				.build()
+				.securitySchemes(security());
+	}
+	
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder()
+				.title("Well-Notify API项目")
+				.contact(new Contact("张小康", "https://zxk175.com", "zxk175@qq.com"))
+				.version("1.0.0")
+				.build();
+	}
+	
+	private List<ApiKey> security() {
+		List<ApiKey> apiKeys = new ArrayList<>();
+		apiKeys.add(new ApiKey("token", "token", "header"));
+		return apiKeys;
+	}
+	
 }

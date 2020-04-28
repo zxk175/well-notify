@@ -7,7 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author zxk175
@@ -15,43 +19,43 @@ import java.io.*;
  */
 @Slf4j
 public class RepeatedlyReadWrapper extends HttpServletRequestWrapper {
-
-    private static final int BUFFER_START_POSITION = 0;
-    private static final int BUFFER_LENGTH = 1024;
-    private final String body;
-
-
-    RepeatedlyReadWrapper(HttpServletRequest request) throws IOException {
-        super(request);
-
-        StringBuilder bufferStr = new StringBuilder(BUFFER_LENGTH);
-        BufferedReader bufferedReader = null;
-        try {
-            InputStream inputStream = request.getInputStream();
-            if (ObjectUtil.isNotNull(inputStream)) {
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Const.UTF_8_OBJ));
-
-                char[] charBuffer = new char[BUFFER_LENGTH];
-                int bytesRead;
-                while ((bytesRead = bufferedReader.read(charBuffer, 0, BUFFER_LENGTH)) > 0) {
-                    bufferStr.append(charBuffer, BUFFER_START_POSITION, bytesRead);
-                }
-            }
-        } catch (IOException e) {
-            log.error("Error reading the request body…", e);
-        } finally {
-            if (ObjectUtil.isNotNull(bufferedReader)) {
-                bufferedReader.close();
-            }
-        }
-
-        body = bufferStr.toString();
-    }
-
-    @Override
-    public ServletInputStream getInputStream() {
-        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes(Const.UTF_8_OBJ));
-        return new MyServletInputStream(byteArrayInputStream);
-    }
-
+	
+	private static final int BUFFER_START_POSITION = 0;
+	private static final int BUFFER_LENGTH = 1024;
+	private final String body;
+	
+	
+	RepeatedlyReadWrapper(HttpServletRequest request) throws IOException {
+		super(request);
+		
+		StringBuilder bufferStr = new StringBuilder(BUFFER_LENGTH);
+		BufferedReader bufferedReader = null;
+		try {
+			InputStream inputStream = request.getInputStream();
+			if (ObjectUtil.isNotNull(inputStream)) {
+				bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Const.UTF_8_OBJ));
+				
+				char[] charBuffer = new char[BUFFER_LENGTH];
+				int bytesRead;
+				while ((bytesRead = bufferedReader.read(charBuffer, 0, BUFFER_LENGTH)) > 0) {
+					bufferStr.append(charBuffer, BUFFER_START_POSITION, bytesRead);
+				}
+			}
+		} catch (IOException e) {
+			log.error("Error reading the request body…", e);
+		} finally {
+			if (ObjectUtil.isNotNull(bufferedReader)) {
+				bufferedReader.close();
+			}
+		}
+		
+		body = bufferStr.toString();
+	}
+	
+	@Override
+	public ServletInputStream getInputStream() {
+		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes(Const.UTF_8_OBJ));
+		return new MyServletInputStream(byteArrayInputStream);
+	}
+	
 }

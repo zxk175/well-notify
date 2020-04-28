@@ -12,8 +12,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysUserRemoveParam extends SysUserBaseParam {
-
-    @ApiModelProperty(value = "身份标识", example = "1")
-    private Integer identity;
-
+	
+	@ApiModelProperty(value = "身份标识", example = "1")
+	private Integer identity;
+	
 }

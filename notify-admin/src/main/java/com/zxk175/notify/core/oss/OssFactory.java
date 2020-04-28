@@ -5,8 +5,8 @@ package com.zxk175.notify.core.oss;
  * @since 2019-10-12 16:39
  */
 public class OssFactory {
-
-    public static AbstractOssService build() {
-        return new AliYunOssService();
-    }
+	
+	public static AbstractOssService build() {
+		return new AliYunOssService();
+	}
 }
