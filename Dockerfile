@@ -14,6 +14,7 @@ FROM openjdk:8u212-jre-alpine
 LABEL maintainer="zxk175 zxk175@qq.com"
 
 COPY --from=builder /home/gradle/app/notify-admin/build/libs/ .
+
 # 查看目录
 #RUN ls -al
 
