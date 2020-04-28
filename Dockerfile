@@ -3,11 +3,13 @@ LABEL maintainer="zxk175 zxk175@qq.com"
 
 ADD . app
 
-RUN cd app && gradle :notify-admin:build -x test \
-    && cd notify-admin/build/libs/ && mv *.jar app.jar
-
 # 查看目录
-#RUN pwd && ls -al app/notify-admin/build/libs
+#RUN pwd && ls -al app
+
+WORKDIR app
+
+RUN gradle :notify-admin:build -x test --no-daemon \
+    && cd notify-admin/build/libs/ && mv *.jar app.jar
 
 
 FROM openjdk:8u212-jre-alpine
