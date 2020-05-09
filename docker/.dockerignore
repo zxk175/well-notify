@@ -1,5 +1,6 @@
 .git
 .idea
+.DS_Store
 *.iws
 *.iml
 *.ipr
@@ -12,6 +13,7 @@ build/
 classes/
 notify-admin/
 
+README.md
 gradlew
 gradlew.bat
 
