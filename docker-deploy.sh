@@ -14,7 +14,6 @@ docker_image_latest="${docker_project}:latest"
 docker images
 
 docker login -u${docker_username} ${docker_server_addr}
-docker login -uzxk175@qq.com registry.cn-shenzhen.aliyuncs.com
 
 # push 指定tag分支
 docker tag ${docker_image_local} ${docker_server_addr}/${docker_project}:${docker_tag}
