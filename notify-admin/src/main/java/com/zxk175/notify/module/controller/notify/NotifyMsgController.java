@@ -13,9 +13,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collection;
@@ -36,17 +38,24 @@ public class NotifyMsgController extends BaseController {
 	
 	
 	@ResponseBody
-	@PostMapping("/remove")
+	@PostMapping("/remove/v1")
 	@ApiOperation(value = "删除消息", notes = "删除消息")
 	public Response<Object> removeNotifyMsg(@Validated @RequestBody NotifyMsgRemoveParam param) {
-		return ok();
+		return notifyMsgService.removeNotifyMsg(param);
 	}
 	
 	@ResponseBody
-	@PostMapping("/list")
+	@PostMapping("/list/v1")
 	@ApiOperation(value = "消息分页列表", notes = "消息分页列表")
 	public ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(@Validated @RequestBody NotifyMsgListParam param) {
 		return notifyMsgService.listNotifyMsgPage(param);
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/info/v1")
+	@ApiOperation(value = "获取消息内容", notes = "获取消息内容")
+	public Response<Object> getMsgInfo(@RequestParam(name = "msgId") String msgId) {
+		return notifyMsgService.infoNotifyMsg(msgId);
 	}
 	
 }

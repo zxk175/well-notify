@@ -3,7 +3,6 @@ package com.zxk175.notify.module.controller.wx;
 import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.module.bean.param.wx.DeviceNotifyParam;
 import com.zxk175.notify.module.controller.BaseController;
-import com.zxk175.notify.module.service.notify.INotifyMsgService;
 import com.zxk175.notify.module.service.wx.IWxTemplateMsgService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(tags = "微信公众号模板消息通知V1")
 public class WxMpTemplateMsgV1Controller extends BaseController {
 	
-	private final INotifyMsgService notifyMsgService;
 	private final IWxTemplateMsgService templateMsgService;
 	
 	
@@ -46,13 +43,6 @@ public class WxMpTemplateMsgV1Controller extends BaseController {
 	@ApiOperation(value = "发送通知消息", notes = "发送通知消息")
 	public ResponseExt<Object, ?> sendMsg(@Validated @RequestBody DeviceNotifyParam param) {
 		return templateMsgService.send(param);
-	}
-	
-	@ResponseBody
-	@GetMapping(value = "/msg-info/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "获取消息内容", notes = "获取消息内容")
-	public ResponseExt<Object, ?> getMsgInfo(@RequestParam(name = "msgId") String msgId) {
-		return notifyMsgService.infoNotifyMsg(msgId);
 	}
 	
 }

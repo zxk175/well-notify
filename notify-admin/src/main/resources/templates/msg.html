@@ -62,7 +62,7 @@
                 let that = this;
 
                 let msgId = getQueryString("msgId");
-                let url = ctx + "/notify/msg-info/v1?msgId=" + msgId;
+                let url = ctx + "/notify/notify-msg/info/v1?msgId=" + msgId;
                 get(url, function (res) {
                     let data = res.data;
                     if (data.success) {

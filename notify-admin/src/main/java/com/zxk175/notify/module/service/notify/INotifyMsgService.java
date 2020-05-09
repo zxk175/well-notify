@@ -24,6 +24,6 @@ public interface INotifyMsgService extends IService<NotifyMsg> {
 	
 	ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param);
 	
-	ResponseExt<Object, ?> infoNotifyMsg(String msgId);
+	Response<Object> infoNotifyMsg(String msgId);
 	
 }

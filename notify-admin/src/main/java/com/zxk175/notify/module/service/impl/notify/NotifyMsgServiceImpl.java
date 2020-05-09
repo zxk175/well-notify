@@ -54,13 +54,13 @@ public class NotifyMsgServiceImpl extends ServiceImpl<NotifyMsgDao, NotifyMsg> i
 	}
 	
 	@Override
-	public ResponseExt<Object, ?> infoNotifyMsg(String msgId) {
+	public Response<Object> infoNotifyMsg(String msgId) {
 		QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
 		notifyMsgQw.select("title, content");
 		notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
 		notifyMsgQw.eq("id", msgId);
 		Map<String, Object> notifyMsg = this.getMap(notifyMsgQw);
-		return ResponseExt.objectReturn(notifyMsg);
+		return Response.objectReturn(notifyMsg);
 	}
 	
 }
