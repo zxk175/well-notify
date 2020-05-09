@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.constant.enums.StateType;
+import com.zxk175.notify.core.http.Response;
 import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.core.util.common.CommonUtil;
 import com.zxk175.notify.module.bean.param.notify.NotifyMsgListParam;
+import com.zxk175.notify.module.bean.param.notify.NotifyMsgRemoveParam;
 import com.zxk175.notify.module.bean.vo.PageBeanVo;
 import com.zxk175.notify.module.dao.notify.NotifyMsgDao;
 import com.zxk175.notify.module.pojo.notify.NotifyMsg;
 import com.zxk175.notify.module.service.notify.INotifyMsgService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +30,17 @@ import java.util.Map;
  */
 @Service
 public class NotifyMsgServiceImpl extends ServiceImpl<NotifyMsgDao, NotifyMsg> implements INotifyMsgService {
+	
+	@Override
+	@Transactional(rollbackFor = RuntimeException.class)
+	public Response<Object> removeNotifyMsg(NotifyMsgRemoveParam param) {
+		boolean remove = false;
+		for (String idStr : param.getIdArr()) {
+			remove = this.removeById(idStr);
+		}
+		
+		return Response.removeReturn(remove);
+	}
 	
 	@Override
 	public ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param) {

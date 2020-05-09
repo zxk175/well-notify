@@ -4,6 +4,7 @@ import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.http.Response;
 import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.module.bean.param.notify.NotifyMsgListParam;
+import com.zxk175.notify.module.bean.param.notify.NotifyMsgRemoveParam;
 import com.zxk175.notify.module.bean.vo.PageBeanVo;
 import com.zxk175.notify.module.controller.BaseController;
 import com.zxk175.notify.module.service.notify.INotifyMsgService;
@@ -35,23 +36,9 @@ public class NotifyMsgController extends BaseController {
 	
 	
 	@ResponseBody
-	@PostMapping("/save")
-	@ApiOperation(value = "新增消息", notes = "新增消息")
-	public Response<Object> saveNotifyMsg(@Validated @RequestBody Object param) {
-		return ok();
-	}
-	
-	@ResponseBody
 	@PostMapping("/remove")
 	@ApiOperation(value = "删除消息", notes = "删除消息")
-	public Response<Object> removeNotifyMsg(@Validated @RequestBody Object param) {
-		return ok();
-	}
-	
-	@ResponseBody
-	@PostMapping("/modify")
-	@ApiOperation(value = "修改消息", notes = "修改消息")
-	public Response<Object> modifyNotifyMsg(@Validated @RequestBody Object param) {
+	public Response<Object> removeNotifyMsg(@Validated @RequestBody NotifyMsgRemoveParam param) {
 		return ok();
 	}
 	
