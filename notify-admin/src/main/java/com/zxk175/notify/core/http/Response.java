@@ -92,11 +92,11 @@ public class Response<T> implements Serializable {
 	}
 	
 	public static <T> Response<T> removeReturn(boolean flag) {
-		return flag ? success(ResponseMsg.DB_DELETE_SUCCESS) : failure(ResponseMsg.DB_SAVE_FAILURE);
+		return flag ? success(ResponseMsg.DB_DELETE_SUCCESS) : failure(ResponseMsg.DB_DELETE_FAILURE);
 	}
 	
 	public static <T> Response<T> modifyReturn(boolean flag) {
-		return success(ResponseMsg.DB_MODIFY_SUCCESS);
+		return flag ? success(ResponseMsg.DB_MODIFY_SUCCESS) : failure(ResponseMsg.DB_MODIFY_FAILURE);
 	}
 	
 	public static <T> Response<T> objectReturn(T data) {
