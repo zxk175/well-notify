@@ -14,8 +14,8 @@ cp -R ./notify-admin/build/libs/*.jar ./docker/app.jar
 cd docker && docker build -f ./Dockerfile . -t zxk175/well-notify:1.0.0
 
 # 停止容器
-docker stop "$(docker ps -a | grep 'Exited' | awk '{print $1 }')"
+docker ps -a | grep "Exited" | awk '{print $1 }' | xargs docker stop
 # 删除已停止容器
-docker rm "$(docker ps -a | grep 'Exited' | awk '{print $1 }')"
+docker ps -a | grep 'Exited' | awk '{print $1 }' | xargs docker rm
 # 删除 none 镜像
-docker rmi "$(docker images | grep 'none' | awk '{print $3}')"
+docker images | grep 'none' | awk '{print $3 }' | xargs docker rmi
