@@ -45,19 +45,19 @@ public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
 	
 	@Override
 	public ResponseExt<Object, ?> send(DeviceNotifyParam param) {
-		NotifyMsg notifyMsg = notifySave(param);
-		
-		NotifyChannel notifyChannelDb = notifyChannelService.infoNotifyChannel(param);
-		if (ObjectUtil.isNull(notifyChannelDb)) {
-			return ResponseExt.failure("sendKey不合法");
-		}
-		
-		List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.notifyChannelUsers(notifyChannelDb.getId());
-		if (CollUtil.isEmpty(notifyChannelUsers)) {
-			return ResponseExt.failure("无人订阅");
-		}
-		
 		try {
+			NotifyMsg notifyMsg = notifySave(param);
+			
+			NotifyChannel notifyChannelDb = notifyChannelService.infoNotifyChannel(param);
+			if (ObjectUtil.isNull(notifyChannelDb)) {
+				return ResponseExt.failure("sendKey不合法");
+			}
+			
+			List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.notifyChannelUsers(notifyChannelDb.getId());
+			if (CollUtil.isEmpty(notifyChannelUsers)) {
+				return ResponseExt.failure("无人订阅");
+			}
+			
 			return notifyCommon(notifyMsg, notifyChannelDb, notifyChannelUsers);
 		} catch (Exception ex) {
 			log.error("发送服务异常", ex);
