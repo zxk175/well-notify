@@ -6,7 +6,7 @@ set -e
 docker_username="zxk175@qq.com"
 docker_server_addr=registry.cn-shenzhen.aliyuncs.com
 
-docker_tag="1.0.1"
+docker_tag="1.0.0"
 docker_project="zxk175/well-notify"
 docker_image_local="${docker_project}:1.0.0"
 docker_image_latest="${docker_project}:latest"
