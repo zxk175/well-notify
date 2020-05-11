@@ -3,6 +3,7 @@ package com.zxk175.notify.module.service.impl.notify;
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.constant.enums.StateType;
 import com.zxk175.notify.core.http.Response;
 import com.zxk175.notify.core.http.ResponseExt;
@@ -76,6 +77,15 @@ public class NotifyChannelUserServiceImpl extends ServiceImpl<NotifyChannelUserD
 		notifyChannelUserQw.eq("id", param.getUserId());
 		Map<String, Object> record = this.getMap(notifyChannelUserQw);
 		return Response.objectReturn(record);
+	}
+	
+	@Override
+	public List<NotifyChannelUser> notifyChannelUsers(Long channelId) {
+		QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
+		notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
+		notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyChannelUserQw.eq("channel_id", channelId);
+		return this.list(notifyChannelUserQw);
 	}
 	
 }

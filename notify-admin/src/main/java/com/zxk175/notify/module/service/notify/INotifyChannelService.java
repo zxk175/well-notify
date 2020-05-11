@@ -6,6 +6,7 @@ import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelInfoParam;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelListParam;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelRemoveParam;
+import com.zxk175.notify.module.bean.param.wx.DeviceNotifyParam;
 import com.zxk175.notify.module.bean.vo.PageBeanVo;
 import com.zxk175.notify.module.pojo.notify.NotifyChannel;
 
@@ -32,5 +33,7 @@ public interface INotifyChannelService extends IService<NotifyChannel> {
 	Response<Collection<?>> listSelectNotifyChannel();
 	
 	Response<Object> infoNotifyChannel(NotifyChannelInfoParam param);
+	
+	NotifyChannel infoNotifyChannel(DeviceNotifyParam param);
 	
 }

@@ -10,6 +10,7 @@ import com.zxk175.notify.module.bean.vo.PageBeanVo;
 import com.zxk175.notify.module.pojo.notify.NotifyChannelUser;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -30,5 +31,7 @@ public interface INotifyChannelUserService extends IService<NotifyChannelUser> {
 	ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelUserPage(NotifyChannelUserListParam param);
 	
 	Response<Object> infoNotifyChannelUser(NotifyChannelUserInfoParam param);
+	
+	List<NotifyChannelUser> notifyChannelUsers(Long channelId);
 	
 }

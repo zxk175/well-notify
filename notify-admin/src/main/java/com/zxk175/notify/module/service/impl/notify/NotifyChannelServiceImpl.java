@@ -1,6 +1,7 @@
 package com.zxk175.notify.module.service.impl.notify;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zxk175.notify.core.constant.Const;
@@ -11,6 +12,7 @@ import com.zxk175.notify.core.util.common.CommonUtil;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelInfoParam;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelListParam;
 import com.zxk175.notify.module.bean.param.notify.NotifyChannelRemoveParam;
+import com.zxk175.notify.module.bean.param.wx.DeviceNotifyParam;
 import com.zxk175.notify.module.bean.vo.PageBeanVo;
 import com.zxk175.notify.module.dao.notify.NotifyChannelDao;
 import com.zxk175.notify.module.pojo.notify.NotifyChannel;
@@ -35,8 +37,7 @@ public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, Noti
 	
 	@Override
 	public Response<Object> saveNotifyChannel(NotifyChannel param) {
-		boolean flag = this.save(param);
-		return Response.saveReturn(flag);
+		return Response.saveReturn(this.save(param));
 	}
 	
 	@Override
@@ -55,8 +56,7 @@ public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, Noti
 	
 	@Override
 	public Response<Object> modifyNotifyChannel(NotifyChannel param) {
-		boolean flag = this.updateById(param);
-		return Response.modifyReturn(flag);
+		return Response.modifyReturn(this.updateById(param));
 	}
 	
 	@Override
@@ -76,8 +76,7 @@ public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, Noti
 		notifyChannelQw.select("id AS `value`, channel_name AS `view`");
 		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
 		notifyChannelQw.orderByDesc("create_time");
-		List<Map<String, Object>> records = this.listMaps(notifyChannelQw);
-		return Response.collReturn(records);
+		return Response.collReturn(this.listMaps(notifyChannelQw));
 	}
 	
 	@Override
@@ -85,8 +84,23 @@ public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, Noti
 		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
 		notifyChannelQw.select("id AS channelId, channel_name AS channelName, state");
 		notifyChannelQw.eq("id", param.getChannelId());
-		Map<String, Object> record = this.getMap(notifyChannelQw);
-		return Response.objectReturn(record);
+		return Response.objectReturn(this.getMap(notifyChannelQw));
+	}
+	
+	@Override
+	public NotifyChannel infoNotifyChannel(DeviceNotifyParam param) {
+		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+		notifyChannelQw.select("id, channel_name, state");
+		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
+		notifyChannelQw.eq("id", param.getSendKey());
+		NotifyChannel notifyChannelDb = this.getOne(notifyChannelQw);
+		// 通道为空 返回公共通道
+		if (ObjectUtil.isNull(notifyChannelDb)) {
+			param.setSendKey("999");
+			notifyChannelDb = infoNotifyChannel(param);
+		}
+		
+		return notifyChannelDb;
 	}
 	
 }
