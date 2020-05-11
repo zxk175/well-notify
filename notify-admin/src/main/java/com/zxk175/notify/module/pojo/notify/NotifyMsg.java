@@ -45,6 +45,14 @@ public class NotifyMsg extends Model<NotifyMsg> {
 	@ApiModelProperty(value = "内容", example = "test")
 	private String content;
 	
+	@TableField("channel_id")
+	@ApiModelProperty(value = "通道Id", example = "0")
+	private Long channelId;
+	
+	@TableField("channel_name")
+	@ApiModelProperty(value = "通道名字", example = "公共通道")
+	private String channelName;
+	
 	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	@ApiModelProperty(value = "创建时间", hidden = true)
 	private LocalDateTime createTime;

@@ -1,7 +1,6 @@
 package com.zxk175.notify.module.service.impl.wx;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.zxk175.notify.core.config.WxConfig;
 import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.core.tuple.Tuple2;
@@ -46,12 +45,9 @@ public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
 	@Override
 	public ResponseExt<Object, ?> send(DeviceNotifyParam param) {
 		try {
-			NotifyMsg notifyMsg = notifySave(param);
-			
 			NotifyChannel notifyChannelDb = notifyChannelService.infoNotifyChannel(param);
-			if (ObjectUtil.isNull(notifyChannelDb)) {
-				return ResponseExt.failure("sendKey不合法");
-			}
+			
+			NotifyMsg notifyMsg = notifySave(param, notifyChannelDb);
 			
 			List<NotifyChannelUser> notifyChannelUsers = notifyChannelUserService.notifyChannelUsers(notifyChannelDb.getId());
 			if (CollUtil.isEmpty(notifyChannelUsers)) {
@@ -65,10 +61,12 @@ public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
 		}
 	}
 	
-	private NotifyMsg notifySave(DeviceNotifyParam param) {
+	private NotifyMsg notifySave(DeviceNotifyParam param, NotifyChannel notifyChannel) {
 		NotifyMsg notifyMsg = new NotifyMsg();
 		notifyMsg.setTitle(param.getTitle());
 		notifyMsg.setContent(param.getContent());
+		notifyMsg.setChannelId(notifyChannel.getId());
+		notifyMsg.setChannelName(notifyChannel.getChannelName());
 		if (notifyMsgService.save(notifyMsg)) {
 			return notifyMsg;
 		}
