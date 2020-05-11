@@ -3,6 +3,8 @@
 # 任何语句的执行结果不是true 则退出
 set -e
 
+rm -rf notify-admin/build/
+
 # 打包
 gradle :notify-admin:build -x test --no-daemon
 
