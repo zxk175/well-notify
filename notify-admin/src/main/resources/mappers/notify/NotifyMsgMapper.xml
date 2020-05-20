@@ -8,6 +8,7 @@
             nm.title,
             nm.channel_id AS channelId,
             nm.channel_name AS channelName,
+            nm.send_flag AS sendFlag,
             nm.create_time AS createTime,
             nm.state
         FROM
@@ -16,11 +17,14 @@
             <if test="title != null and title != ''">
                 AND nm.title LIKE CONCAT('%', #{title}, '%')
             </if>
+            <if test="channelId != null and channelId > 0">
+                AND nm.channel_id = #{channelId}
+            </if>
+            <if test="sendFlag != null">
+                AND nm.send_flag = #{sendFlag}
+            </if>
             <if test="createTime != null and createTime != ''">
                 AND DATE(nm.create_time) = #{createTime}
-            </if>
-            <if test="channelId != null and channelId != ''">
-               AND nm.channel_id = #{channelId}
             </if>
         </where>
         ORDER BY
@@ -37,11 +41,14 @@
             <if test="title != null and title != ''">
                 AND nm.title LIKE CONCAT('%', #{title}, '%')
             </if>
+            <if test="channelId != null and channelId != 0">
+                AND nm.channel_id = #{channelId}
+            </if>
+            <if test="sendFlag != null">
+                AND nm.send_flag = #{sendFlag}
+            </if>
             <if test="createTime != null and createTime != ''">
                 AND DATE(nm.create_time) = #{createTime}
-            </if>
-            <if test="channelId != null and channelId != ''">
-                AND nm.channel_id = #{channelId}
             </if>
         </where>
     </select>
