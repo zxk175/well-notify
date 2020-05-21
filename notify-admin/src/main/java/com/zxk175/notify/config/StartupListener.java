@@ -17,19 +17,19 @@ import javax.annotation.Nullable;
 @Component
 @AllArgsConstructor
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
-	
-	private final WxAccessUtil wxAccessUtil;
-	
-	
-	@Override
-	public void onApplicationEvent(@Nullable ContextRefreshedEvent refreshedEvent) {
-		try {
-			String wxGlobalToken = wxAccessUtil.getGlobalToken();
-			log.info("WxGlobalToken：{}", wxGlobalToken);
-			log.info("初始化成功");
-		} catch (Exception ex) {
-			log.error("初始化失败", ex);
-		}
-	}
-	
+
+    private final WxAccessUtil wxAccessUtil;
+
+
+    @Override
+    public void onApplicationEvent(@Nullable ContextRefreshedEvent refreshedEvent) {
+        try {
+            String wxGlobalToken = wxAccessUtil.getGlobalToken();
+            log.info("WxGlobalToken：{}", wxGlobalToken);
+            log.info("初始化成功");
+        } catch (Exception ex) {
+            log.error("初始化失败", ex);
+        }
+    }
+
 }

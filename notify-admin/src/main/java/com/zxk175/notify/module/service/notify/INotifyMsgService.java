@@ -19,11 +19,11 @@ import java.util.Collection;
  * @since 2019-11-27 15:35
  */
 public interface INotifyMsgService extends IService<NotifyMsg> {
-	
-	Response<Object> removeNotifyMsg(NotifyMsgRemoveParam param);
-	
-	ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param);
-	
-	Response<Object> infoNotifyMsg(String msgId);
-	
+
+    Response<Object> removeNotifyMsg(NotifyMsgRemoveParam param);
+
+    ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param);
+
+    Response<Object> infoNotifyMsg(String msgId);
+
 }

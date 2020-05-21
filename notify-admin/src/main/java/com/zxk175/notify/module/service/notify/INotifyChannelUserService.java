@@ -21,17 +21,17 @@ import java.util.List;
  * @since 2019-11-27 15:35
  */
 public interface INotifyChannelUserService extends IService<NotifyChannelUser> {
-	
-	Response<Object> saveNotifyChannelUser(NotifyChannelUser param);
-	
-	Response<Object> removeNotifyChannelUser(NotifyChannelUserRemoveParam param);
-	
-	Response<Object> modifyNotifyChannelUser(NotifyChannelUser param);
-	
-	ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelUserPage(NotifyChannelUserListParam param);
-	
-	Response<Object> infoNotifyChannelUser(NotifyChannelUserInfoParam param);
-	
-	List<NotifyChannelUser> notifyChannelUsers(Long channelId);
-	
+
+    Response<Object> saveNotifyChannelUser(NotifyChannelUser param);
+
+    Response<Object> removeNotifyChannelUser(NotifyChannelUserRemoveParam param);
+
+    Response<Object> modifyNotifyChannelUser(NotifyChannelUser param);
+
+    ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelUserPage(NotifyChannelUserListParam param);
+
+    Response<Object> infoNotifyChannelUser(NotifyChannelUserInfoParam param);
+
+    List<NotifyChannelUser> notifyChannelUsers(Long channelId);
+
 }

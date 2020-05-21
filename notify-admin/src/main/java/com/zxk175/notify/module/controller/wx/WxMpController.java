@@ -32,38 +32,38 @@ import java.util.Map;
 @RequestMapping(Const.BASE_URL + "/wx-mp")
 @Api(tags = "微信公众号")
 public class WxMpController extends BaseController {
-	
-	private WxAccessUtil wxAccessUtil;
-	
-	
-	@ResponseBody
-	@GetMapping(value = "/main/v1")
-	@ApiOperation(value = "Token验证", notes = "Token验证")
-	public String wxAuthGet() {
-		return WxSignUtil.checkSign(request, WxConfig.WX_MP_TOKEN);
-	}
-	
-	@ResponseBody
-	@PostMapping(value = "/main/v1")
-	@ApiOperation(value = "解析Post请求", notes = "解析Post请求")
-	public String parsePost() throws Exception {
-		request.setCharacterEncoding(Const.UTF_8);
-		response.setContentType("text/xml;charset=utf-8");
-		
-		// 默认返回的文本消息
-		return "";
-	}
-	
-	@ResponseBody
-	@PostMapping(value = "/clear-quota/v1")
-	@ApiOperation(value = "清除配额(每月10次)", notes = "清除配额(每月10次)")
-	public Response<Object> clearQuota() {
-		String globalToken = wxAccessUtil.getGlobalToken();
-		Map<String, Object> paramMap = new HashMap<>(8);
-		paramMap.put("appid", WxConfig.MP_APP_ID);
-		
-		JSONObject result = OkHttpUtil.instance().postJson2Obj("https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=" + globalToken, FastJsonUtil.jsonStr(paramMap));
-		return Response.success(result);
-	}
-	
+
+    private final WxAccessUtil wxAccessUtil;
+
+
+    @ResponseBody
+    @GetMapping(value = "/main/v1")
+    @ApiOperation(value = "Token验证", notes = "Token验证")
+    public String wxAuthGet() {
+        return WxSignUtil.checkSign(request, WxConfig.WX_MP_TOKEN);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/main/v1")
+    @ApiOperation(value = "解析Post请求", notes = "解析Post请求")
+    public String parsePost() throws Exception {
+        request.setCharacterEncoding(Const.UTF_8);
+        response.setContentType("text/xml;charset=utf-8");
+
+        // 默认返回的文本消息
+        return "";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/clear-quota/v1")
+    @ApiOperation(value = "清除配额(每月10次)", notes = "清除配额(每月10次)")
+    public Response<Object> clearQuota() {
+        String globalToken = wxAccessUtil.getGlobalToken();
+        Map<String, Object> paramMap = new HashMap<>(8);
+        paramMap.put("appid", WxConfig.MP_APP_ID);
+
+        JSONObject result = OkHttpUtil.instance().postJson2Obj("https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=" + globalToken, FastJsonUtil.jsonStr(paramMap));
+        return Response.success(result);
+    }
+
 }

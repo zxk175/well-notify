@@ -12,35 +12,35 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2020-04-29 18:06
  */
 public class BaseController {
-	
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	
-	
-	@ModelAttribute
-	public void setRequestAndResponse(HttpServletRequest request, HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-	}
-	
-	protected Response<Object> ok() {
-		return Response.success();
-	}
-	
-	protected Response<Object> ok(Object data) {
-		return Response.success(data);
-	}
-	
-	protected Response<Object> ok(Object data, Object extra) {
-		return Response.success(data, extra);
-	}
-	
-	protected Response<Object> fail(ResponseMsg responseMsg) {
-		return Response.failure(responseMsg);
-	}
-	
-	protected Response<Object> fail(String msg) {
-		return Response.failure(msg);
-	}
-	
+
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
+
+
+    @ModelAttribute
+    public void setRequestAndResponse(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
+    }
+
+    protected Response<Object> ok() {
+        return Response.success();
+    }
+
+    protected Response<Object> ok(Object data) {
+        return Response.success(data);
+    }
+
+    protected Response<Object> ok(Object data, Object extra) {
+        return Response.success(data, extra);
+    }
+
+    protected Response<Object> fail(ResponseMsg responseMsg) {
+        return Response.failure(responseMsg);
+    }
+
+    protected Response<Object> fail(String msg) {
+        return Response.failure(msg);
+    }
+
 }

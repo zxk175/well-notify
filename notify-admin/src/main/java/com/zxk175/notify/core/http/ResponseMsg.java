@@ -15,7 +15,7 @@ public enum ResponseMsg {
     SUCCESS(Const.SUCCESS_CODE, Const.SUCCESS_TXT),
     FAILURE(Const.FAILURE_CODE, Const.FAILURE_TXT),
     NOT_FOUND_DATA(Const.SUCCESS_CODE, "暂无数据"),
-	
+
     // 参数错误 1000-1999
     PARAM_NOT_COMPLETE(1000, "参数缺失"),
     TOKEN_NOT_ERROR(1001, "请在请求头添加登录状态"),

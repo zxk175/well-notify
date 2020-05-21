@@ -13,14 +13,14 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class ErrorVo implements Serializable {
-	
-	private String field;
-	
-	private String message;
-	
-	private Object rejectedValue;
-	
-	@JSONField(serialize = false)
-	private Integer index;
-	
+
+    private String field;
+
+    private String message;
+
+    private Object rejectedValue;
+
+    @JSONField(serialize = false)
+    private Integer index;
+
 }

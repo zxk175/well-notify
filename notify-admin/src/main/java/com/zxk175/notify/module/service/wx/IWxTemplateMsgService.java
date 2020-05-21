@@ -12,7 +12,7 @@ import com.zxk175.notify.module.bean.param.wx.DeviceNotifyParam;
  * @since 2019-11-27 15:35
  */
 public interface IWxTemplateMsgService {
-	
-	ResponseExt<Object, ?> send(DeviceNotifyParam param);
-	
+
+    ResponseExt<Object, ?> send(DeviceNotifyParam param);
+
 }

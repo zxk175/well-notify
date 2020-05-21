@@ -3,11 +3,7 @@ package com.zxk175.notify.core.annotation.request;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author zxk175
@@ -19,12 +15,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Documented
 public @interface RequestLimit {
-	
-	// 允许访问的次数，默认值MAX_VALUE
-	int count() default Integer.MAX_VALUE;
-	
-	// 时间段，单位为秒，默认值1分钟
-	long time() default 60;
-	
+
+    // 允许访问的次数，默认值MAX_VALUE
+    int count() default Integer.MAX_VALUE;
+
+    // 时间段，单位为秒，默认值1分钟
+    long time() default 60;
+
 }
 

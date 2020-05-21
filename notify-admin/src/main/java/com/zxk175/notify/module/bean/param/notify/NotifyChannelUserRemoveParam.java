@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Data
 public class NotifyChannelUserRemoveParam {
-	
-	private List<String> idArr;
-	
+
+    private List<String> idArr;
+
 }

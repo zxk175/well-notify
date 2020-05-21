@@ -9,21 +9,21 @@ import java.io.InputStream;
  * @since 2019-10-12 16:39
  */
 public abstract class AbstractOssService {
-	
-	String bucketName;
-	String baseUrl;
-	
-	
-	public abstract Tuple2<Boolean, String> upload(InputStream inputStream, String dir, String ext, String newName, String oldName) throws Exception;
-	
-	public abstract void removeFile(String bucketName, String diskName, String key);
-	
-	public abstract void removeBatch(String dir);
-	
-	public abstract boolean objectExist(String fullPath);
-	
-	
-	public String getBaseUrl() {
-		return baseUrl;
-	}
+
+    String bucketName;
+    String baseUrl;
+
+
+    public abstract Tuple2<Boolean, String> upload(InputStream inputStream, String dir, String ext, String newName, String oldName) throws Exception;
+
+    public abstract void removeFile(String bucketName, String diskName, String key);
+
+    public abstract void removeBatch(String dir);
+
+    public abstract boolean objectExist(String fullPath);
+
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
 }

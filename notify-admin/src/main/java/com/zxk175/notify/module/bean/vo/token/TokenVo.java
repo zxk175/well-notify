@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenVo {
-	
-	private Long ttl;
-	
-	private String token;
-	
-	private Long expireIn;
-	
+
+    private Long ttl;
+
+    private String token;
+
+    private Long expireIn;
+
 }

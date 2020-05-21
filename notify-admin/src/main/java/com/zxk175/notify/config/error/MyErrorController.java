@@ -29,60 +29,60 @@ import java.util.Map;
 @Controller
 @RequestMapping("/error")
 public class MyErrorController extends AbstractErrorController {
-	
-	private final ErrorProperties errorProperties;
-	
-	
-	@Autowired
-	public MyErrorController(ErrorAttributes errorAttributes, ServerProperties serverProperties) {
-		super(errorAttributes);
-		this.errorProperties = serverProperties.getError();
-	}
-	
-	@Override
-	public String getErrorPath() {
-		return this.errorProperties.getPath();
-	}
-	
-	@Override
-	protected Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-		Map<String, Object> errorAttributes = super.getErrorAttributes(request, includeStackTrace);
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		errorAttributes.put("timestamp", dtf.format(LocalDateTime.now()));
-		return errorAttributes;
-	}
-	
-	@RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
-	public ModelAndView pageError(HttpServletRequest request, HttpServletResponse response) {
-		response.setStatus(getStatus(request).value());
-		
-		// 自定义视图
-		Map<String, Object> model = getErrorAttributes(request, true);
-		return new ModelAndView("error", model);
-	}
-	
-	@ResponseBody
-	@RequestMapping
-	public Object apiError(HttpServletRequest request) {
-		HttpStatus httpStatus = getStatus(request);
-		
-		String msg;
-		int code = httpStatus.value();
-		switch (code) {
-			case 404:
-				msg = "请求地址不存在：" + RequestUtil.requestUrl(request);
-				break;
-			case 500:
-				msg = "服务器内部错误";
-				break;
-			default:
-				msg = "请求错误";
-				break;
-		}
-		
-		log.error(msg);
-		return Response.failure(code, msg);
-	}
-	
+
+    private final ErrorProperties errorProperties;
+
+
+    @Autowired
+    public MyErrorController(ErrorAttributes errorAttributes, ServerProperties serverProperties) {
+        super(errorAttributes);
+        this.errorProperties = serverProperties.getError();
+    }
+
+    @Override
+    public String getErrorPath() {
+        return this.errorProperties.getPath();
+    }
+
+    @Override
+    protected Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
+        Map<String, Object> errorAttributes = super.getErrorAttributes(request, includeStackTrace);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        errorAttributes.put("timestamp", dtf.format(LocalDateTime.now()));
+        return errorAttributes;
+    }
+
+    @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView pageError(HttpServletRequest request, HttpServletResponse response) {
+        response.setStatus(getStatus(request).value());
+
+        // 自定义视图
+        Map<String, Object> model = getErrorAttributes(request, true);
+        return new ModelAndView("error", model);
+    }
+
+    @ResponseBody
+    @RequestMapping
+    public Object apiError(HttpServletRequest request) {
+        HttpStatus httpStatus = getStatus(request);
+
+        String msg;
+        int code = httpStatus.value();
+        switch (code) {
+            case 404:
+                msg = "请求地址不存在：" + RequestUtil.requestUrl(request);
+                break;
+            case 500:
+                msg = "服务器内部错误";
+                break;
+            default:
+                msg = "请求错误";
+                break;
+        }
+
+        log.error(msg);
+        return Response.failure(code, msg);
+    }
+
 }

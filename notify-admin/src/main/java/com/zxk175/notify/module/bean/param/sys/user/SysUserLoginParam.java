@@ -11,12 +11,12 @@ import lombok.Data;
  */
 @Data
 public class SysUserLoginParam {
-	
-	@Mobile
-	@ApiModelProperty(value = "手机号", example = Const.DEFAULT_MOBILE)
-	private String mobile;
-	
-	@ApiModelProperty(value = "密码", example = "123456")
-	private String password;
-	
+
+    @Mobile
+    @ApiModelProperty(value = "手机号", example = Const.DEFAULT_MOBILE)
+    private String mobile;
+
+    @ApiModelProperty(value = "密码", example = "123456")
+    private String password;
+
 }

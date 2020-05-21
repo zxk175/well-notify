@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @SpringBootApplication
 public class NotifyAdminApplication {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(NotifyAdminApplication.class, args);
-		log.info("项目启动成功");
-	}
-	
-	@GetMapping("/")
-	public String index() {
-		return "redirect:/swagger-ui.html";
-	}
-	
+
+    public static void main(String[] args) {
+        SpringApplication.run(NotifyAdminApplication.class, args);
+        log.info("项目启动成功");
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/swagger-ui.html";
+    }
+
 }

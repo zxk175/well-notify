@@ -16,33 +16,33 @@ import java.util.concurrent.TimeUnit;
 @Component
 @AllArgsConstructor
 public class StringRedisUtil {
-	
-	private final StringRedisTemplate stringRedisTemplate;
-	
-	
-	public boolean flushRedis() {
-		final Object execute = stringRedisTemplate.execute((RedisCallback<Object>) connection -> {
-			connection.flushAll();
-			return Const.SUCCESS;
-		});
-		
-		return Const.SUCCESS.equals(Convert.toStr(execute));
-	}
-	
-	public void set(final String key, final String value, final Long expire) {
-		stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
-	}
-	
-	public String get(final String key) {
-		return stringRedisTemplate.boundValueOps(key).get();
-	}
-	
-	public Long increment(final String key, final Long val) {
-		return stringRedisTemplate.boundValueOps(key).increment(val);
-	}
-	
-	public void expire(final String key, final Long time, final TimeUnit timeUnit) {
-		stringRedisTemplate.expire(key, time, timeUnit);
-	}
-	
+
+    private final StringRedisTemplate stringRedisTemplate;
+
+
+    public boolean flushRedis() {
+        final Object execute = stringRedisTemplate.execute((RedisCallback<Object>) connection -> {
+            connection.flushAll();
+            return Const.SUCCESS;
+        });
+
+        return Const.SUCCESS.equals(Convert.toStr(execute));
+    }
+
+    public void set(final String key, final String value, final Long expire) {
+        stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+    }
+
+    public String get(final String key) {
+        return stringRedisTemplate.boundValueOps(key).get();
+    }
+
+    public Long increment(final String key, final Long val) {
+        return stringRedisTemplate.boundValueOps(key).increment(val);
+    }
+
+    public void expire(final String key, final Long time, final TimeUnit timeUnit) {
+        stringRedisTemplate.expire(key, time, timeUnit);
+    }
+
 }

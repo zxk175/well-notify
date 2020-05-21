@@ -24,18 +24,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(Const.BASE_URL)
 @Api(tags = "公共接口")
 public class CommonController extends BaseController {
-	
-	private final WxAccessUtil wxAccessUtil;
-	
-	
-	@ResponseBody
-	@RequestLimit(count = Const.LIMIT_30)
-	@GetMapping(value = "/wx-mp/global-token/v1")
-	@ApiOperation(value = "获取公众号GlobalToken", notes = "获取公众号GlobalToken")
-	public Response<Object> getWxGlobalTokenV1() {
-		String accessToken = wxAccessUtil.getGlobalToken();
-		
-		return ok(accessToken);
-	}
-	
+
+    private final WxAccessUtil wxAccessUtil;
+
+
+    @ResponseBody
+    @RequestLimit(count = Const.LIMIT_30)
+    @GetMapping(value = "/wx-mp/global-token/v1")
+    @ApiOperation(value = "获取公众号GlobalToken", notes = "获取公众号GlobalToken")
+    public Response<Object> getWxGlobalTokenV1() {
+        String accessToken = wxAccessUtil.getGlobalToken();
+
+        return ok(accessToken);
+    }
+
 }

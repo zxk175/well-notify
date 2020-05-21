@@ -16,9 +16,9 @@ import java.util.Map;
  * @since 2019-11-27 15:35
  */
 public interface NotifyMsgDao extends BaseMapper<NotifyMsg> {
-	
-	List<Map<String, Object>> listNotifyMsg(NotifyMsgListParam param);
-	
-	Long countNotifyMsg(NotifyMsgListParam param);
-	
+
+    List<Map<String, Object>> listNotifyMsg(NotifyMsgListParam param);
+
+    Long countNotifyMsg(NotifyMsgListParam param);
+
 }

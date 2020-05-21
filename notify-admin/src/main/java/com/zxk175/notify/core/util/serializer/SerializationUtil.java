@@ -7,16 +7,16 @@ import org.nustaq.serialization.FSTConfiguration;
  * @since 2020-03-29 13:44
  */
 public class SerializationUtil {
-	
-	private static final FSTConfiguration configuration = FSTConfiguration.createDefaultConfiguration();
-	
-	
-	public static byte[] serialize(Object object) {
-		return configuration.asByteArray(object);
-	}
-	
-	static Object deserialize(byte[] bytes) {
-		return configuration.asObject(bytes);
-	}
-	
+
+    private static final FSTConfiguration configuration = FSTConfiguration.createDefaultConfiguration();
+
+
+    public static byte[] serialize(Object object) {
+        return configuration.asByteArray(object);
+    }
+
+    static Object deserialize(byte[] bytes) {
+        return configuration.asObject(bytes);
+    }
+
 }

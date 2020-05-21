@@ -16,9 +16,9 @@ import java.util.Map;
  * @since 2019-11-27 15:35
  */
 public interface NotifyChannelUserDao extends BaseMapper<NotifyChannelUser> {
-	
-	List<Map<String, Object>> listNotifyChannelUser(NotifyChannelUserListParam param);
-	
-	Long countNotifyChannelUser(NotifyChannelUserListParam param);
-	
+
+    List<Map<String, Object>> listNotifyChannelUser(NotifyChannelUserListParam param);
+
+    Long countNotifyChannelUser(NotifyChannelUserListParam param);
+
 }

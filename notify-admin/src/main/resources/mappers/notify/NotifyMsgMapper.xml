@@ -6,6 +6,7 @@
         SELECT
            	nm.id AS msgId,
             nm.title,
+            nm.content_url AS contentUrl,
             nm.channel_id AS channelId,
             nm.channel_name AS channelName,
             nm.send_flag AS sendFlag,

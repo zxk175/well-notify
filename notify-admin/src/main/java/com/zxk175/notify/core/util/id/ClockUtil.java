@@ -20,40 +20,40 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
  * @since 2019/03/23 15:43
  */
 public class ClockUtil {
-	
-	private final long period;
-	private final AtomicLong now;
-	
-	private ClockUtil(long period) {
-		this.period = period;
-		this.now = new AtomicLong(System.currentTimeMillis());
-		scheduleClockUpdating();
-	}
-	
-	private static ClockUtil instance() {
-		return InstanceHolder.INSTANCE;
-	}
-	
-	public static long now() {
-		return instance().currentTimeMillis();
-	}
-	
-	private void scheduleClockUpdating() {
-		ScheduledExecutorService scheduler = newSingleThreadScheduledExecutor(runnable -> {
-			Thread thread = new Thread(runnable, getClass().getName());
-			thread.setDaemon(true);
-			return thread;
-		});
-		
-		scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period, TimeUnit.MILLISECONDS);
-	}
-	
-	private long currentTimeMillis() {
-		return now.get();
-	}
-	
-	private static class InstanceHolder {
-		static final ClockUtil INSTANCE = new ClockUtil(1);
-	}
-	
+
+    private final long period;
+    private final AtomicLong now;
+
+    private ClockUtil(long period) {
+        this.period = period;
+        this.now = new AtomicLong(System.currentTimeMillis());
+        scheduleClockUpdating();
+    }
+
+    private static ClockUtil instance() {
+        return InstanceHolder.INSTANCE;
+    }
+
+    public static long now() {
+        return instance().currentTimeMillis();
+    }
+
+    private void scheduleClockUpdating() {
+        ScheduledExecutorService scheduler = newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = new Thread(runnable, getClass().getName());
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period, TimeUnit.MILLISECONDS);
+    }
+
+    private long currentTimeMillis() {
+        return now.get();
+    }
+
+    private static class InstanceHolder {
+        static final ClockUtil INSTANCE = new ClockUtil(1);
+    }
+
 }

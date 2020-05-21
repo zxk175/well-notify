@@ -10,29 +10,29 @@ import java.util.concurrent.Callable;
  * @since 2020-03-29 13:46
  */
 public class UploadCallable implements Callable<String> {
-	
-	private final String dir;
-	private final String imgData;
-	private InputStream inputStream;
-	
-	
-	UploadCallable(String dir, String imgData, InputStream inputStream) {
-		this.dir = dir;
-		this.imgData = imgData;
-		this.inputStream = inputStream;
-	}
-	
-	@Override
-	public String call() throws Exception {
-		if (imgData.startsWith("http")) {
-			return imgData;
-		}
-		
-		if (ObjectUtil.isNull(inputStream)) {
-			inputStream = UploadUtil.base64ToStream(imgData);
-		}
-		
-		return UploadUtil.single(inputStream, dir);
-	}
-	
+
+    private final String dir;
+    private final String imgData;
+    private InputStream inputStream;
+
+
+    UploadCallable(String dir, String imgData, InputStream inputStream) {
+        this.dir = dir;
+        this.imgData = imgData;
+        this.inputStream = inputStream;
+    }
+
+    @Override
+    public String call() throws Exception {
+        if (imgData.startsWith("http")) {
+            return imgData;
+        }
+
+        if (ObjectUtil.isNull(inputStream)) {
+            inputStream = UploadUtil.base64ToStream(imgData);
+        }
+
+        return UploadUtil.single(inputStream, dir);
+    }
+
 }

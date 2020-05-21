@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class SysSubjectVo {
-	
-	private Long userId;
-	
+
+    private Long userId;
+
 }

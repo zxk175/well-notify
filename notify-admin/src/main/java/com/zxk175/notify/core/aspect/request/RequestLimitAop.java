@@ -28,33 +28,33 @@ import java.util.concurrent.TimeUnit;
 @Component
 @AllArgsConstructor
 public class RequestLimitAop {
-	
-	private final StringRedisUtil stringRedisUtil;
-	
-	
-	@Before("within(@org.springframework.stereotype.Controller *) && @annotation(limit)")
-	public void doBefore(RequestLimit limit) {
-		HttpServletRequest request = RequestUtil.request();
-		if (ObjectUtil.isNull(request)) {
-			throw new NullPointerException("未获取到HttpServletRequest对象");
-		}
-		
-		String ip = IpUtil.getClientIp(request);
-		String url = Convert.toStr(request.getRequestURL());
-		// 获取请求限制Key
-		String key = CommonUtil.requestLimitKey(url, ip);
-		long count = stringRedisUtil.increment(key, 1L);
-		// 第一次调用
-		if (count == 1) {
-			stringRedisUtil.expire(key, limit.time(), TimeUnit.SECONDS);
-		}
-		
-		// 超过限制次数
-		long limitCount = limit.count();
-		if (count > limitCount) {
-			log.error("用户IP[{}]访问地址[{}]超过了限定的次数[{}]", ip, url, limitCount);
-			throw new RequestLimitException();
-		}
-	}
-	
+
+    private final StringRedisUtil stringRedisUtil;
+
+
+    @Before("within(@org.springframework.stereotype.Controller *) && @annotation(limit)")
+    public void doBefore(RequestLimit limit) {
+        HttpServletRequest request = RequestUtil.request();
+        if (ObjectUtil.isNull(request)) {
+            throw new NullPointerException("未获取到HttpServletRequest对象");
+        }
+
+        String ip = IpUtil.getClientIp(request);
+        String url = Convert.toStr(request.getRequestURL());
+        // 获取请求限制Key
+        String key = CommonUtil.requestLimitKey(url, ip);
+        long count = stringRedisUtil.increment(key, 1L);
+        // 第一次调用
+        if (count == 1) {
+            stringRedisUtil.expire(key, limit.time(), TimeUnit.SECONDS);
+        }
+
+        // 超过限制次数
+        long limitCount = limit.count();
+        if (count > limitCount) {
+            log.error("用户IP[{}]访问地址[{}]超过了限定的次数[{}]", ip, url, limitCount);
+            throw new RequestLimitException();
+        }
+    }
+
 }

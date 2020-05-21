@@ -30,37 +30,37 @@ import java.util.Map;
  */
 @Service
 public class NotifyMsgServiceImpl extends ServiceImpl<NotifyMsgDao, NotifyMsg> implements INotifyMsgService {
-	
-	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
-	public Response<Object> removeNotifyMsg(NotifyMsgRemoveParam param) {
-		boolean remove = false;
-		for (String idStr : param.getIdArr()) {
-			remove = this.removeById(idStr);
-		}
-		
-		return Response.removeReturn(remove);
-	}
-	
-	@Override
-	public ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param) {
-		CommonUtil.buildPageParam(param);
-		
-		List<Map<String, Object>> dataList = baseMapper.listNotifyMsg(param);
-		
-		Long count = baseMapper.countNotifyMsg(param);
-		
-		return ResponseExt.putPageExtraFalse(dataList, count, param);
-	}
-	
-	@Override
-	public Response<Object> infoNotifyMsg(String msgId) {
-		QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
-		notifyMsgQw.select("title, content");
-		notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
-		notifyMsgQw.eq("id", msgId);
-		Map<String, Object> notifyMsg = this.getMap(notifyMsgQw);
-		return Response.objectReturn(notifyMsg);
-	}
-	
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public Response<Object> removeNotifyMsg(NotifyMsgRemoveParam param) {
+        boolean remove = false;
+        for (String idStr : param.getIdArr()) {
+            remove = this.removeById(idStr);
+        }
+
+        return Response.removeReturn(remove);
+    }
+
+    @Override
+    public ResponseExt<Collection<?>, PageBeanVo> listNotifyMsgPage(NotifyMsgListParam param) {
+        CommonUtil.buildPageParam(param);
+
+        List<Map<String, Object>> dataList = baseMapper.listNotifyMsg(param);
+
+        Long count = baseMapper.countNotifyMsg(param);
+
+        return ResponseExt.putPageExtraFalse(dataList, count, param);
+    }
+
+    @Override
+    public Response<Object> infoNotifyMsg(String msgId) {
+        QueryWrapper<NotifyMsg> notifyMsgQw = new QueryWrapper<>();
+        notifyMsgQw.select("title, content");
+        notifyMsgQw.eq(Const.DB_STATE, StateType.SHOW.value());
+        notifyMsgQw.eq("id", msgId);
+        Map<String, Object> notifyMsg = this.getMap(notifyMsgQw);
+        return Response.objectReturn(notifyMsg);
+    }
+
 }

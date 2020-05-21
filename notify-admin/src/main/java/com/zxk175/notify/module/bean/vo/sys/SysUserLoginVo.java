@@ -8,13 +8,13 @@ import lombok.Data;
  */
 @Data
 public class SysUserLoginVo {
-	
-	private String userId;
-	
-	private String userName;
-	
-	private String avatar;
-	
-	private String mobile;
-	
+
+    private String userId;
+
+    private String userName;
+
+    private String avatar;
+
+    private String mobile;
+
 }

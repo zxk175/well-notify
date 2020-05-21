@@ -32,60 +32,60 @@ import java.util.Map;
  */
 @Service
 public class NotifyChannelUserServiceImpl extends ServiceImpl<NotifyChannelUserDao, NotifyChannelUser> implements INotifyChannelUserService {
-	
-	@Override
-	public Response<Object> saveNotifyChannelUser(NotifyChannelUser param) {
-		boolean flag = this.save(param);
-		return Response.saveReturn(flag);
-	}
-	
-	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
-	public Response<Object> removeNotifyChannelUser(NotifyChannelUserRemoveParam param) {
-		NotifyChannelUser notifyChannelUser;
-		for (String idStr : param.getIdArr()) {
-			notifyChannelUser = new NotifyChannelUser();
-			notifyChannelUser.setId(Convert.toLong(idStr));
-			notifyChannelUser.setState(StateType.HIDE.value());
-			this.updateById(notifyChannelUser);
-		}
-		
-		return Response.removeReturn(true);
-	}
-	
-	@Override
-	public Response<Object> modifyNotifyChannelUser(NotifyChannelUser param) {
-		boolean flag = this.updateById(param);
-		return Response.modifyReturn(flag);
-	}
-	
-	@Override
-	public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelUserPage(NotifyChannelUserListParam param) {
-		CommonUtil.buildPageParam(param);
-		
-		List<Map<String, Object>> records = baseMapper.listNotifyChannelUser(param);
-		
-		Long count = baseMapper.countNotifyChannelUser(param);
-		
-		return ResponseExt.putPageExtraFalse(records, count, param);
-	}
-	
-	@Override
-	public Response<Object> infoNotifyChannelUser(NotifyChannelUserInfoParam param) {
-		QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
-		notifyChannelUserQw.select("id AS userId, user_name AS userName, channel_id AS channelId, channel_name AS channelName, open_id AS openId, state");
-		notifyChannelUserQw.eq("id", param.getUserId());
-		Map<String, Object> record = this.getMap(notifyChannelUserQw);
-		return Response.objectReturn(record);
-	}
-	
-	@Override
-	public List<NotifyChannelUser> notifyChannelUsers(Long channelId) {
-		QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
-		notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
-		notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
-		notifyChannelUserQw.eq("channel_id", channelId);
-		return this.list(notifyChannelUserQw);
-	}
-	
+
+    @Override
+    public Response<Object> saveNotifyChannelUser(NotifyChannelUser param) {
+        boolean flag = this.save(param);
+        return Response.saveReturn(flag);
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public Response<Object> removeNotifyChannelUser(NotifyChannelUserRemoveParam param) {
+        NotifyChannelUser notifyChannelUser;
+        for (String idStr : param.getIdArr()) {
+            notifyChannelUser = new NotifyChannelUser();
+            notifyChannelUser.setId(Convert.toLong(idStr));
+            notifyChannelUser.setState(StateType.HIDE.value());
+            this.updateById(notifyChannelUser);
+        }
+
+        return Response.removeReturn(true);
+    }
+
+    @Override
+    public Response<Object> modifyNotifyChannelUser(NotifyChannelUser param) {
+        boolean flag = this.updateById(param);
+        return Response.modifyReturn(flag);
+    }
+
+    @Override
+    public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelUserPage(NotifyChannelUserListParam param) {
+        CommonUtil.buildPageParam(param);
+
+        List<Map<String, Object>> records = baseMapper.listNotifyChannelUser(param);
+
+        Long count = baseMapper.countNotifyChannelUser(param);
+
+        return ResponseExt.putPageExtraFalse(records, count, param);
+    }
+
+    @Override
+    public Response<Object> infoNotifyChannelUser(NotifyChannelUserInfoParam param) {
+        QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
+        notifyChannelUserQw.select("id AS userId, user_name AS userName, channel_id AS channelId, channel_name AS channelName, open_id AS openId, state");
+        notifyChannelUserQw.eq("id", param.getUserId());
+        Map<String, Object> record = this.getMap(notifyChannelUserQw);
+        return Response.objectReturn(record);
+    }
+
+    @Override
+    public List<NotifyChannelUser> notifyChannelUsers(Long channelId) {
+        QueryWrapper<NotifyChannelUser> notifyChannelUserQw = new QueryWrapper<>();
+        notifyChannelUserQw.select("id, user_name, channel_id, open_id, state");
+        notifyChannelUserQw.eq(Const.DB_STATE, StateType.SHOW.value());
+        notifyChannelUserQw.eq("channel_id", channelId);
+        return this.list(notifyChannelUserQw);
+    }
+
 }
