@@ -26,55 +26,59 @@ import java.util.concurrent.FutureTask;
  */
 public class UploadUtil {
 
-    public static String single(InputStream inputStream, String dir) throws Exception {
+    public static String single(InputStream inputStream, String dir) {
         Tuple4<Boolean, String, String, String> tuple = single(inputStream, dir, "jpg", "");
         return tuple.third;
     }
 
-    public static String single(InputStream inputStream, String dir, String ext) throws Exception {
+    public static String single(InputStream inputStream, String dir, String ext) {
         Tuple4<Boolean, String, String, String> tuple = single(inputStream, dir, ext, "");
         return tuple.third;
     }
 
-    public static Tuple4<Boolean, String, String, String> single(InputStream inputStream, String dir, String ext, String oldImgUrl) throws Exception {
-        long fileSize = inputStream.available();
-        if (fileSize < 1) {
-            throw new RuntimeException("上传文件大小不能为0");
+    public static Tuple4<Boolean, String, String, String> single(InputStream inputStream, String dir, String ext, String oldImgUrl) {
+        try {
+            long fileSize = inputStream.available();
+            if (fileSize < 1) {
+                throw new RuntimeException("上传文件大小不能为0");
+            }
+
+            InCacheUtil cacheUtil = new InCacheUtil(inputStream);
+            InputStream cacheStream = cacheUtil.getInputStream();
+
+            // 判断图片md5
+            String newName = Md5Util.md5(cacheStream);
+            String[] newNameSplit = dir.split(MyStrUtil.COLON);
+            if (newNameSplit.length > 1) {
+                dir = newNameSplit[0];
+                newName = newNameSplit[1] + MyStrUtil.UNDERLINE + newName;
+            }
+
+            String oldName = CommonUtil.getFileName(oldImgUrl);
+            String shortPath = dir + newName + MyStrUtil.DOT + ext;
+
+            // 判断文件是否存在
+            AbstractOssService instance = OssFactory.build();
+            boolean objectExist = instance.objectExist(shortPath);
+
+            // 文件存在 返回原始图片地址
+            if (objectExist) {
+                String fullPath = instance.getBaseUrl() + shortPath;
+                return Tuples.tuple(true, shortPath, fullPath, newName);
+            }
+
+            cacheStream = cacheUtil.getInputStream();
+            Tuple2<Boolean, String> tuple = instance.upload(cacheStream, dir, ext, newName, oldName);
+            if (tuple.first) {
+                String fullPath = tuple.second;
+
+                return Tuples.tuple(true, shortPath, fullPath, newName);
+            }
+
+            return Tuples.tuple(false, shortPath, "", newName);
+        } catch (Exception ex) {
+            throw new RuntimeException("上传失败");
         }
-
-        InCacheUtil cacheUtil = new InCacheUtil(inputStream);
-        InputStream cacheStream = cacheUtil.getInputStream();
-
-        // 判断图片md5
-        String newName = Md5Util.md5(cacheStream);
-        String[] newNameSplit = dir.split(MyStrUtil.COLON);
-        if (newNameSplit.length > 1) {
-            dir = newNameSplit[0];
-            newName = newNameSplit[1] + MyStrUtil.UNDERLINE + newName;
-        }
-
-        String oldName = CommonUtil.getFileName(oldImgUrl);
-        String shortPath = dir + newName + MyStrUtil.DOT + ext;
-
-        // 判断文件是否存在
-        AbstractOssService instance = OssFactory.build();
-        boolean objectExist = instance.objectExist(shortPath);
-
-        // 文件存在 返回原始图片地址
-        if (objectExist) {
-            String fullPath = instance.getBaseUrl() + shortPath;
-            return Tuples.tuple(true, shortPath, fullPath, newName);
-        }
-
-        cacheStream = cacheUtil.getInputStream();
-        Tuple2<Boolean, String> tuple = instance.upload(cacheStream, dir, ext, newName, oldName);
-        if (tuple.first) {
-            String fullPath = tuple.second;
-
-            return Tuples.tuple(true, shortPath, fullPath, newName);
-        }
-
-        throw new RuntimeException("上传失败");
     }
 
     public static Tuple2<String, List<String>> multiple(String dir, List<String> imgList) throws Exception {
@@ -117,11 +121,6 @@ public class UploadUtil {
         }
 
         return Tuples.tuple(FastJsonUtil.jsonStrByMy(imgPaths), imgPaths);
-    }
-
-    public static void removeBatch(String dir) {
-        AbstractOssService instance = OssFactory.build();
-        instance.removeBatch(dir);
     }
 
     static InputStream base64ToStream(String base64) {

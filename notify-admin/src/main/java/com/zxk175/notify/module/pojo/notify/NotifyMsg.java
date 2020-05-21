@@ -41,6 +41,10 @@ public class NotifyMsg extends Model<NotifyMsg> {
     @ApiModelProperty(value = "内容", example = "test")
     private String content;
 
+    @TableField("content_url")
+    @ApiModelProperty(value = "内容地址", example = "test")
+    private String contentUrl;
+
     @TableField("channel_id")
     @ApiModelProperty(value = "通道Id", example = "0")
     private Long channelId;
@@ -48,6 +52,10 @@ public class NotifyMsg extends Model<NotifyMsg> {
     @TableField("channel_name")
     @ApiModelProperty(value = "通道名字", example = "公共通道")
     private String channelName;
+
+    @TableField("send_flag")
+    @ApiModelProperty(value = "是否发送 0-未发 1-已发", example = "1")
+    private Integer sendFlag;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间", hidden = true)

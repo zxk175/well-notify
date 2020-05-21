@@ -2,11 +2,14 @@ package com.zxk175.notify.module.service.impl.wx;
 
 import cn.hutool.core.collection.CollUtil;
 import com.zxk175.notify.core.config.WxConfig;
+import com.zxk175.notify.core.constant.Const;
 import com.zxk175.notify.core.http.ResponseExt;
 import com.zxk175.notify.core.tuple.Tuple2;
 import com.zxk175.notify.core.util.MyStrUtil;
 import com.zxk175.notify.core.util.ThreadUtil;
+import com.zxk175.notify.core.util.common.CommonUtil;
 import com.zxk175.notify.core.util.spring.SpringActiveUtil;
+import com.zxk175.notify.core.util.upload.UploadUtil;
 import com.zxk175.notify.core.util.wx.WxTemplateMsgUtil;
 import com.zxk175.notify.core.util.wx.bean.notify.DeviceNotifyData;
 import com.zxk175.notify.core.util.wx.thread.DeviceNotifyCallable;
@@ -22,6 +25,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -62,9 +67,14 @@ public class WxTemplateMsgServiceImpl implements IWxTemplateMsgService {
     }
 
     private NotifyMsg notifySave(DeviceNotifyParam param, NotifyChannel notifyChannel) {
+        InputStream inputStream = new ByteArrayInputStream(param.getContent().getBytes(Const.UTF_8_OBJ));
+        String dir = CommonUtil.buildErrorPath("error");
+        String ossUrl = UploadUtil.single(inputStream, dir, "md");
+
         NotifyMsg notifyMsg = new NotifyMsg();
         notifyMsg.setTitle(param.getTitle());
         notifyMsg.setContent(param.getContent());
+        notifyMsg.setContentUrl(ossUrl);
         notifyMsg.setChannelId(notifyChannel.getId());
         notifyMsg.setChannelName(notifyChannel.getChannelName());
         if (notifyMsgService.save(notifyMsg)) {

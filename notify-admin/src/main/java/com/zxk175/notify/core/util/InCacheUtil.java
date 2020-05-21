@@ -17,20 +17,24 @@ public class InCacheUtil {
      */
     private ByteArrayOutputStream byteArrayOutputStream = null;
 
-    public InCacheUtil(InputStream inputStream) throws Exception {
-        if (ObjectUtil.isNull(inputStream)) {
-            return;
+    public InCacheUtil(InputStream inputStream) {
+        try {
+            if (ObjectUtil.isNull(inputStream)) {
+                return;
+            }
+
+            int length;
+            byte[] buffer = new byte[1024];
+            byteArrayOutputStream = new ByteArrayOutputStream();
+
+            while ((length = inputStream.read(buffer)) > -1) {
+                byteArrayOutputStream.write(buffer, 0, length);
+            }
+
+            byteArrayOutputStream.flush();
+        } catch (Exception ex) {
+            throw new RuntimeException("InCacheUtil Init Exception", ex);
         }
-
-        int length;
-        byte[] buffer = new byte[1024];
-        byteArrayOutputStream = new ByteArrayOutputStream();
-
-        while ((length = inputStream.read(buffer)) > -1) {
-            byteArrayOutputStream.write(buffer, 0, length);
-        }
-
-        byteArrayOutputStream.flush();
     }
 
     public InputStream getInputStream() {

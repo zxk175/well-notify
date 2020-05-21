@@ -10,15 +10,19 @@ import java.security.MessageDigest;
  */
 public class Md5Util {
 
-    public static String md5(InputStream in) throws Exception {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        int len;
-        byte[] buffer = new byte[8192];
-        while ((len = in.read(buffer)) != -1) {
-            md5.update(buffer, 0, len);
+    public static String md5(InputStream in) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            int len;
+            byte[] buffer = new byte[8192];
+            while ((len = in.read(buffer)) != -1) {
+                md5.update(buffer, 0, len);
+            }
+            BigInteger bi = new BigInteger(1, md5.digest());
+            return bi.toString(16);
+        } catch (Exception ex) {
+            throw new RuntimeException("MD5 Exception", ex);
         }
-        BigInteger bi = new BigInteger(1, md5.digest());
-        return bi.toString(16);
     }
 
 }
