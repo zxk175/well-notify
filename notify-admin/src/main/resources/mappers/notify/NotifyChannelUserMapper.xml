@@ -6,7 +6,7 @@
         SELECT
             ncu.id AS userId,
             ncu.user_name AS userName,
-            ncu.channel_id AS channelId ,
+            ncu.channel_id AS channelId,
             ncu.channel_name AS channelName,
             ncu.open_id AS openId,
             ncu.create_time AS createTime,
