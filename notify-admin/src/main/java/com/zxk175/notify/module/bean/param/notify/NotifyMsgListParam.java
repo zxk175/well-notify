@@ -19,7 +19,7 @@ public class NotifyMsgListParam extends PageParam {
     @ApiModelProperty(value = "是否发送 0-未发 1-已发", example = "1")
     private Integer sendFlag;
 
-    @ApiModelProperty(value = "通道Id", example = "1174160779906125825")
+    @ApiModelProperty(value = "通道Id", example = "999")
     private String channelId;
 
     @ApiModelProperty(value = "创建时间", example = "2020-05-09")

@@ -14,6 +14,11 @@
             ncu.state
         FROM
             t_notify_channel_user AS ncu
+        <where>
+            <if test="channelId != null and channelId > 0">
+                AND ncu.channel_id = #{channelId}
+            </if>
+        </where>
         ORDER BY
             ncu.create_time DESC
         LIMIT #{page}, #{size}
@@ -24,6 +29,11 @@
             COUNT(*)
         FROM
             t_notify_channel_user AS ncu
+        <where>
+            <if test="channelId != null and channelId > 0">
+                AND ncu.channel_id = #{channelId}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -34,73 +34,75 @@ import java.util.Map;
  */
 @Service
 public class NotifyChannelServiceImpl extends ServiceImpl<NotifyChannelDao, NotifyChannel> implements INotifyChannelService {
-	
-	@Override
-	public Response<Object> saveNotifyChannel(NotifyChannel param) {
-		return Response.saveReturn(this.save(param));
-	}
-	
-	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
-	public Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param) {
-		NotifyChannel notifyChannel;
-		for (String idStr : param.getIdArr()) {
-			notifyChannel = new NotifyChannel();
-			notifyChannel.setId(Convert.toLong(idStr));
-			notifyChannel.setState(StateType.HIDE.value());
-			this.updateById(notifyChannel);
-		}
-		
-		return Response.removeReturn(true);
-	}
-	
-	@Override
-	public Response<Object> modifyNotifyChannel(NotifyChannel param) {
-		return Response.modifyReturn(this.updateById(param));
-	}
-	
-	@Override
-	public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param) {
-		CommonUtil.buildPageParam(param);
-		
-		List<Map<String, Object>> dataList = baseMapper.listNotifyChannel(param);
-		
-		Long count = baseMapper.countNotifyChannel(param);
-		
-		return ResponseExt.putPageExtraFalse(dataList, count, param);
-	}
-	
-	@Override
-	public Response<Collection<?>> listSelectNotifyChannel() {
-		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-		notifyChannelQw.select("id AS `value`, channel_name AS `view`");
-		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
-		notifyChannelQw.orderByDesc("create_time");
-		return Response.collReturn(this.listMaps(notifyChannelQw));
-	}
-	
-	@Override
-	public Response<Object> infoNotifyChannel(NotifyChannelInfoParam param) {
-		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-		notifyChannelQw.select("id AS channelId, channel_name AS channelName, state");
-		notifyChannelQw.eq("id", param.getChannelId());
-		return Response.objectReturn(this.getMap(notifyChannelQw));
-	}
-	
-	@Override
-	public NotifyChannel infoNotifyChannel(DeviceNotifyParam param) {
-		QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
-		notifyChannelQw.select("id, channel_name, state");
-		notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
-		notifyChannelQw.eq("id", param.getSendKey());
-		NotifyChannel notifyChannelDb = this.getOne(notifyChannelQw);
-		// 通道为空 返回公共通道
-		if (ObjectUtil.isNull(notifyChannelDb)) {
-			param.setSendKey("999");
-			notifyChannelDb = infoNotifyChannel(param);
-		}
-		
-		return notifyChannelDb;
-	}
-	
+
+    @Override
+    public Response<Object> saveNotifyChannel(NotifyChannel param) {
+        return Response.saveReturn(this.save(param));
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public Response<Object> removeNotifyChannel(NotifyChannelRemoveParam param) {
+        NotifyChannel notifyChannel;
+        for (String idStr : param.getIdArr()) {
+            notifyChannel = new NotifyChannel();
+            notifyChannel.setId(Convert.toLong(idStr));
+            notifyChannel.setState(StateType.HIDE.value());
+            this.updateById(notifyChannel);
+        }
+
+        return Response.removeReturn(true);
+    }
+
+    @Override
+    public Response<Object> modifyNotifyChannel(NotifyChannel param) {
+        return Response.modifyReturn(this.updateById(param));
+    }
+
+    @Override
+    public ResponseExt<Collection<?>, PageBeanVo> listNotifyChannelPage(NotifyChannelListParam param) {
+        CommonUtil.buildPageParam(param);
+
+        List<Map<String, Object>> dataList = baseMapper.listNotifyChannel(param);
+
+        Long count = baseMapper.countNotifyChannel(param);
+
+        return ResponseExt.putPageExtraFalse(dataList, count, param);
+    }
+
+    @Override
+    public Response<Collection<?>> listSelectNotifyChannel() {
+        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+        notifyChannelQw.select("id AS `value`, channel_name AS `view`");
+        notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
+        notifyChannelQw.orderByDesc("create_time");
+
+        return Response.collReturn(this.listMaps(notifyChannelQw));
+    }
+
+    @Override
+    public Response<Object> infoNotifyChannel(NotifyChannelInfoParam param) {
+        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+        notifyChannelQw.select("id AS channelId, channel_name AS channelName, state");
+        notifyChannelQw.eq("id", param.getChannelId());
+
+        return Response.objectReturn(this.getMap(notifyChannelQw));
+    }
+
+    @Override
+    public NotifyChannel infoNotifyChannel(DeviceNotifyParam param) {
+        QueryWrapper<NotifyChannel> notifyChannelQw = new QueryWrapper<>();
+        notifyChannelQw.select("id, channel_name, state");
+        notifyChannelQw.eq(Const.DB_STATE, StateType.SHOW.value());
+        notifyChannelQw.eq("id", param.getSendKey());
+        NotifyChannel notifyChannelDb = this.getOne(notifyChannelQw);
+        // 通道为空 返回公共通道
+        if (ObjectUtil.isNull(notifyChannelDb)) {
+            param.setSendKey("999");
+            notifyChannelDb = infoNotifyChannel(param);
+        }
+
+        return notifyChannelDb;
+    }
+
 }
